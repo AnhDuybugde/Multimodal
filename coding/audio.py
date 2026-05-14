@@ -115,9 +115,12 @@ class AudioPipeline:
         return mel
 
     def __call__(self, path: str, crop_mode: str = "center") -> torch.Tensor:
-        waveform = self.load_waveform(path)
-        waveform = self.crop_or_pad(waveform, crop_mode)
+        waveform = self.load_processed_waveform(path, crop_mode)
         return self.waveform_to_mel(waveform)
+
+    def load_processed_waveform(self, path: str, crop_mode: str = "center") -> torch.Tensor:
+        waveform = self.load_waveform(path)
+        return self.crop_or_pad(waveform, crop_mode)
 
 
 def _load_wav_stdlib(path: str):

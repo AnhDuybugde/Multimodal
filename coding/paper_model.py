@@ -1,0 +1,115 @@
+from __future__ import annotations
+
+import torch
+from torch import nn
+from torchvision import models
+
+
+class PaperLikeFusionNet(nn.Module):
+    """AST + CLAP + ViT-B/16 with lightweight Transformer fusion."""
+
+    def __init__(
+        self,
+        num_classes: int = 4,
+        sample_rate: int = 22000,
+        ast_model_name: str = "MIT/ast-finetuned-audioset-10-10-0.4593",
+        clap_model_name: str = "laion/clap-htsat-unfused",
+        fusion_dim: int = 256,
+        fusion_heads: int = 4,
+        fusion_layers: int = 2,
+        fusion_dropout: float = 0.1,
+        freeze_pretrained: bool = False,
+    ) -> None:
+        super().__init__()
+        try:
+            from transformers import ASTFeatureExtractor, ASTModel, AutoProcessor, ClapModel
+        except ImportError as exc:
+            raise ImportError(
+                "PaperLikeFusionNet requires transformers. On Kaggle, install/enable "
+                "`transformers` and allow model weights from the Kaggle cache/input or internet."
+            ) from exc
+
+        self.sample_rate = sample_rate
+        self.ast_feature_extractor = ASTFeatureExtractor.from_pretrained(ast_model_name)
+        self.ast_model = ASTModel.from_pretrained(ast_model_name)
+        self.clap_processor = AutoProcessor.from_pretrained(clap_model_name)
+        self.clap_model = ClapModel.from_pretrained(clap_model_name)
+
+        vit_weights = models.ViT_B_16_Weights.DEFAULT
+        self.image_model = models.vit_b_16(weights=vit_weights)
+        vit_dim = self.image_model.heads.head.in_features
+        self.image_model.heads = nn.Identity()
+
+        ast_dim = self.ast_model.config.hidden_size
+        clap_dim = self.clap_model.config.projection_dim
+        self.ast_proj = nn.Linear(ast_dim, fusion_dim)
+        self.clap_proj = nn.Linear(clap_dim, fusion_dim)
+        self.image_proj = nn.Linear(vit_dim, fusion_dim)
+
+        self.cls_token = nn.Parameter(torch.zeros(1, 1, fusion_dim))
+        encoder_layer = nn.TransformerEncoderLayer(
+            d_model=fusion_dim,
+            nhead=fusion_heads,
+            dim_feedforward=fusion_dim * 4,
+            dropout=fusion_dropout,
+            activation="gelu",
+            batch_first=True,
+            norm_first=True,
+        )
+        self.fusion = nn.TransformerEncoder(encoder_layer, num_layers=fusion_layers)
+        self.classifier = nn.Sequential(
+            nn.LayerNorm(fusion_dim),
+            nn.Linear(fusion_dim, num_classes),
+        )
+
+        if freeze_pretrained:
+            self._freeze_pretrained()
+
+    def _freeze_pretrained(self) -> None:
+        for module in (self.ast_model, self.clap_model, self.image_model):
+            for param in module.parameters():
+                param.requires_grad = False
+
+    def forward(self, waveform: torch.Tensor, image: torch.Tensor) -> torch.Tensor:
+        ast_emb = self.encode_ast(waveform)
+        clap_emb = self.encode_clap(waveform)
+        image_emb = self.image_model(image)
+
+        tokens = torch.stack(
+            [
+                self.ast_proj(ast_emb),
+                self.clap_proj(clap_emb),
+                self.image_proj(image_emb),
+            ],
+            dim=1,
+        )
+        cls = self.cls_token.expand(tokens.size(0), -1, -1)
+        fused = self.fusion(torch.cat([cls, tokens], dim=1))
+        return self.classifier(fused[:, 0])
+
+    def encode_ast(self, waveform: torch.Tensor) -> torch.Tensor:
+        device = waveform.device
+        arrays = [item.detach().float().cpu().numpy() for item in waveform]
+        inputs = self.ast_feature_extractor(
+            arrays,
+            sampling_rate=self.sample_rate,
+            return_tensors="pt",
+            padding=True,
+        )
+        inputs = {key: value.to(device) for key, value in inputs.items()}
+        outputs = self.ast_model(**inputs)
+        if outputs.pooler_output is not None:
+            return outputs.pooler_output
+        return outputs.last_hidden_state[:, 0]
+
+    def encode_clap(self, waveform: torch.Tensor) -> torch.Tensor:
+        device = waveform.device
+        arrays = [item.detach().float().cpu().numpy() for item in waveform]
+        inputs = self.clap_processor(
+            audios=arrays,
+            sampling_rate=self.sample_rate,
+            return_tensors="pt",
+            padding=True,
+        )
+        inputs = {key: value.to(device) for key, value in inputs.items()}
+        return self.clap_model.get_audio_features(**inputs)

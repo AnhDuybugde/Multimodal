@@ -26,6 +26,19 @@
 - Missing robot image is low-impact: one CSV row references an image not present in both extracted data and `contact_data.zip`.
 - Best wording for reports: "paper-aligned reproduction using the released processed audio-visual dataset," not exact raw-data reproduction.
 
+## Current Code Architecture Decision
+- The active training entrypoint is `coding/train.py`, which delegates to `coding/train_paper.py`.
+- The active model is paper-like:
+  - AST pretrained audio encoder;
+  - CLAP pretrained audio encoder;
+  - ViT-B/16 pretrained image encoder;
+  - lightweight Transformer encoder for fusion;
+  - classifier head over the fused CLS token.
+- The dataset returns both:
+  - `waveform`: 0.8 second, 22 kHz audio for AST/CLAP processors;
+  - `audio`: mel-spectrogram kept for inspection/backward utility.
+- Evaluation reports multiclass macro/weighted F1 and binary contact F1, with accuracy as secondary context.
+
 ## Workflow To Follow
 1. Read the user's request and identify whether it is about notes, paper understanding, or code.
 2. Inspect the relevant files before making edits.
@@ -40,5 +53,6 @@
 - Kaggle-ready code/notebook for training without mutating original dataset files.
 
 ## Update History
+- 2026-05-14 16:55 +07:00: Replaced compact baseline training path with paper-like AST + CLAP + ViT + Transformer fusion architecture.
 - 2026-05-14 14:30 +07:00: Decided to preserve raw released data and implement paper-like preprocessing in code.
 - 2026-05-14 09:37 +07:00: Reorganized `.agent` folder for clarity; expanded workflow, file roles, and paper notes.

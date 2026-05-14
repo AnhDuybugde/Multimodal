@@ -1,6 +1,6 @@
 # Audio-Visual Contact Classification
 
-Kaggle-friendly implementation for the released processed dataset.
+Kaggle-friendly, paper-aligned implementation for the released processed dataset.
 
 ## Goal
 This code trains an audio-image fusion classifier for:
@@ -35,18 +35,35 @@ dataset/
   - validation/test: center crop by default;
   - optional: energy-aware crop.
 - Build mel-spectrograms in the pipeline.
-- Use audio-image fusion for classification.
+- Use AST + CLAP + ViT-B/16 encoders.
+- Fuse modality embeddings with a lightweight Transformer encoder.
+- Report multiclass F1 and binary contact F1.
+
+## Architecture
+- Audio branch 1: pretrained AST from Hugging Face.
+- Audio branch 2: pretrained CLAP from Hugging Face.
+- Vision branch: pretrained ViT-B/16 from torchvision.
+- Fusion: project each embedding to a shared dimension, prepend a learnable CLS token, run a small Transformer encoder, classify from the CLS token.
+
+Default pretrained model names:
+
+```text
+AST:  MIT/ast-finetuned-audioset-10-10-0.4593
+CLAP: laion/clap-htsat-unfused
+ViT:  torchvision ViT_B_16_Weights.DEFAULT
+```
 
 ## Quick Start
 
 From the project root:
 
 ```bash
-python coding/train.py --data-root dataset --epochs 5 --batch-size 16
+python coding/train_paper.py --data-root dataset --epochs 5 --batch-size 4
 ```
 
 For Kaggle, open `coding/kaggle_train.ipynb` and adjust `DATA_ROOT` to your Kaggle dataset path.
 
 ## Notes
 - This is not a raw ROS bag reproduction because the released local data does not include ROS bags or force-torque streams.
-- The model is a compact fusion baseline designed to run easily on Kaggle. Encoders can be replaced later with AST/CLAP/ViT-style backbones.
+- The training script downloads/loads pretrained AST, CLAP, and ViT weights. On Kaggle, enable internet or attach a Kaggle dataset/cache that contains those weights.
+- If GPU memory is limited, reduce `--batch-size` or use `--freeze-pretrained`.

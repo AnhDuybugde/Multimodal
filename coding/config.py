@@ -25,10 +25,21 @@ class DataConfig:
 @dataclass
 class TrainConfig:
     epochs: int = 5
-    batch_size: int = 16
-    lr: float = 1e-3
+    batch_size: int = 8
+    lr: float = 1e-4
     weight_decay: float = 1e-4
     num_workers: int = 2
     val_size: float = 0.2
     seed: int = 42
     use_amp: bool = True
+
+
+@dataclass
+class ModelConfig:
+    ast_model_name: str = "MIT/ast-finetuned-audioset-10-10-0.4593"
+    clap_model_name: str = "laion/clap-htsat-unfused"
+    fusion_dim: int = 256
+    fusion_heads: int = 4
+    fusion_layers: int = 2
+    fusion_dropout: float = 0.1
+    freeze_pretrained: bool = False

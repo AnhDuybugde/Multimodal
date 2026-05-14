@@ -108,8 +108,14 @@ class AudioVisualDataset(Dataset):
 
     def __getitem__(self, idx: int):
         row = self.frame.iloc[idx]
-        mel = self.audio(row.audio_path, self.crop_mode)
+        waveform = self.audio.load_processed_waveform(row.audio_path, self.crop_mode)
+        mel = self.audio.waveform_to_mel(waveform)
         image = Image.open(row.image_path).convert("RGB")
         image = self.image_transform(image)
         label = torch.tensor(row.label_id, dtype=torch.long)
-        return {"audio": mel, "image": image, "label": label}
+        return {
+            "audio": mel,
+            "waveform": waveform.squeeze(0),
+            "image": image,
+            "label": label,
+        }

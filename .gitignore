@@ -1,0 +1,19 @@
+# Large local data/artifacts
+dataset/
+contact_data.zip
+2505.12665v1.pdf
+outputs/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS/editor
+.DS_Store
+Thumbs.db

@@ -60,7 +60,7 @@ class PaperLikeFusionNet(nn.Module):
             dropout=fusion_dropout,
             activation="gelu",
             batch_first=True,
-            norm_first=True,
+            norm_first=False,
         )
         self.fusion = nn.TransformerEncoder(encoder_layer, num_layers=fusion_layers)
         self.classifier = nn.Sequential(
@@ -112,7 +112,7 @@ class PaperLikeFusionNet(nn.Module):
         device = waveform.device
         arrays = self._to_processor_arrays(waveform, self.clap_sample_rate)
         inputs = self.clap_processor(
-            audios=arrays,
+            audio=arrays,
             sampling_rate=self.clap_sample_rate,
             return_tensors="pt",
             padding=True,

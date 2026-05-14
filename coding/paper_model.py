@@ -104,9 +104,7 @@ class PaperLikeFusionNet(nn.Module):
         )
         inputs = {key: value.to(device) for key, value in inputs.items()}
         outputs = self.ast_model(**inputs)
-        if outputs.pooler_output is not None:
-            return outputs.pooler_output
-        return outputs.last_hidden_state[:, 0]
+        return _extract_model_embedding(outputs)
 
     def encode_clap(self, waveform: torch.Tensor) -> torch.Tensor:
         device = waveform.device
@@ -118,7 +116,7 @@ class PaperLikeFusionNet(nn.Module):
             padding=True,
         )
         inputs = {key: value.to(device) for key, value in inputs.items()}
-        return self.clap_model.get_audio_features(**inputs)
+        return _extract_model_embedding(self.clap_model.get_audio_features(**inputs))
 
     def _to_processor_arrays(self, waveform: torch.Tensor, target_rate: int):
         arrays = [item.detach().float().cpu().numpy() for item in waveform]
@@ -135,3 +133,26 @@ class PaperLikeFusionNet(nn.Module):
         up = target_rate // gcd
         down = self.sample_rate // gcd
         return [resample_poly(item, up=up, down=down).astype("float32") for item in arrays]
+
+
+def _extract_model_embedding(output):
+    if torch.is_tensor(output):
+        return output
+
+    pooler = getattr(output, "pooler_output", None)
+    if torch.is_tensor(pooler):
+        return pooler
+
+    last_hidden = getattr(output, "last_hidden_state", None)
+    if torch.is_tensor(last_hidden):
+        return last_hidden[:, 0]
+
+    if isinstance(output, (tuple, list)):
+        for item in output:
+            if torch.is_tensor(item):
+                return item[:, 0] if item.ndim == 3 else item
+            nested = _extract_model_embedding(item)
+            if torch.is_tensor(nested):
+                return nested
+
+    raise TypeError(f"Could not extract tensor embedding from output type: {type(output)!r}")

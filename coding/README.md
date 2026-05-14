@@ -62,6 +62,16 @@ python coding/train_paper.py --data-root dataset --epochs 5 --batch-size 4
 ```
 
 For Kaggle, open `coding/kaggle_train.ipynb` and adjust `DATA_ROOT` to your Kaggle dataset path.
+The notebook is self-contained, so it does not need to import helper functions from the `.py` files.
+It trains three separate runs:
+
+```text
+audio  -> best_audio_model.pt,  audio_results.json
+video  -> best_video_model.pt,  video_results.json
+fusion -> best_fusion_model.pt, fusion_results.json
+```
+
+The `video` branch uses the released image frame for each sample because the processed dataset does not include full video clips.
 
 ## Notes
 - This is not a raw ROS bag reproduction because the released local data does not include ROS bags or force-torque streams.

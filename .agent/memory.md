@@ -38,6 +38,11 @@
   - `waveform`: 0.8 second, 22 kHz audio for AST/CLAP processors;
   - `audio`: mel-spectrogram kept for inspection/backward utility.
 - Evaluation reports multiclass macro/weighted F1 and binary contact F1, with accuracy as secondary context.
+- `coding/kaggle_train.ipynb` is self-contained for Kaggle use and does not depend on importing local `.py` helper modules.
+- The Kaggle notebook trains three separate modes and writes three weight files plus three result JSON files:
+  - `audio`: AST + CLAP + Transformer head;
+  - `video`: ViT-B/16 over released image frames;
+  - `fusion`: AST + CLAP + ViT-B/16 + Transformer fusion.
 
 ## Workflow To Follow
 1. Read the user's request and identify whether it is about notes, paper understanding, or code.
@@ -53,6 +58,7 @@
 - Kaggle-ready code/notebook for training without mutating original dataset files.
 
 ## Update History
+- 2026-05-14 17:15 +07:00: Reworked Kaggle notebook to be self-contained and train audio/video/fusion modes separately.
 - 2026-05-14 16:55 +07:00: Replaced compact baseline training path with paper-like AST + CLAP + ViT + Transformer fusion architecture.
 - 2026-05-14 14:30 +07:00: Decided to preserve raw released data and implement paper-like preprocessing in code.
 - 2026-05-14 09:37 +07:00: Reorganized `.agent` folder for clarity; expanded workflow, file roles, and paper notes.

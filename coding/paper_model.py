@@ -34,6 +34,12 @@ class PaperLikeFusionNet(nn.Module):
         self.ast_model = ASTModel.from_pretrained(ast_model_name)
         self.clap_processor = AutoProcessor.from_pretrained(clap_model_name)
         self.clap_model = ClapModel.from_pretrained(clap_model_name)
+        self.ast_sample_rate = getattr(self.ast_feature_extractor, "sampling_rate", sample_rate)
+        self.clap_sample_rate = getattr(
+            getattr(self.clap_processor, "feature_extractor", None),
+            "sampling_rate",
+            sample_rate,
+        )
 
         vit_weights = models.ViT_B_16_Weights.DEFAULT
         self.image_model = models.vit_b_16(weights=vit_weights)
@@ -89,10 +95,10 @@ class PaperLikeFusionNet(nn.Module):
 
     def encode_ast(self, waveform: torch.Tensor) -> torch.Tensor:
         device = waveform.device
-        arrays = [item.detach().float().cpu().numpy() for item in waveform]
+        arrays = self._to_processor_arrays(waveform, self.ast_sample_rate)
         inputs = self.ast_feature_extractor(
             arrays,
-            sampling_rate=self.sample_rate,
+            sampling_rate=self.ast_sample_rate,
             return_tensors="pt",
             padding=True,
         )
@@ -104,12 +110,28 @@ class PaperLikeFusionNet(nn.Module):
 
     def encode_clap(self, waveform: torch.Tensor) -> torch.Tensor:
         device = waveform.device
-        arrays = [item.detach().float().cpu().numpy() for item in waveform]
+        arrays = self._to_processor_arrays(waveform, self.clap_sample_rate)
         inputs = self.clap_processor(
             audios=arrays,
-            sampling_rate=self.sample_rate,
+            sampling_rate=self.clap_sample_rate,
             return_tensors="pt",
             padding=True,
         )
         inputs = {key: value.to(device) for key, value in inputs.items()}
         return self.clap_model.get_audio_features(**inputs)
+
+    def _to_processor_arrays(self, waveform: torch.Tensor, target_rate: int):
+        arrays = [item.detach().float().cpu().numpy() for item in waveform]
+        if target_rate == self.sample_rate:
+            return arrays
+        try:
+            from scipy.signal import resample_poly
+        except ImportError as exc:
+            raise ImportError("scipy is required to adapt waveform sample rates for pretrained processors.") from exc
+
+        import math
+
+        gcd = math.gcd(self.sample_rate, target_rate)
+        up = target_rate // gcd
+        down = self.sample_rate // gcd
+        return [resample_poly(item, up=up, down=down).astype("float32") for item in arrays]

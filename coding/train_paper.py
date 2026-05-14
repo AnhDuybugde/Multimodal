@@ -32,7 +32,7 @@ def set_seed(seed: int) -> None:
 def run_epoch(model, loader, criterion, optimizer=None, device="cpu", use_amp=True):
     is_train = optimizer is not None
     model.train(is_train)
-    scaler = torch.cuda.amp.GradScaler(enabled=use_amp and device == "cuda")
+    scaler = torch.amp.GradScaler("cuda", enabled=use_amp and device == "cuda")
     total_loss = 0.0
     total_items = 0
     logits_list = []
@@ -44,7 +44,7 @@ def run_epoch(model, loader, criterion, optimizer=None, device="cpu", use_amp=Tr
         labels = batch["label"].to(device)
 
         with torch.set_grad_enabled(is_train):
-            with torch.cuda.amp.autocast(enabled=use_amp and device == "cuda"):
+            with torch.amp.autocast("cuda", enabled=use_amp and device == "cuda"):
                 logits = model(waveform=waveform, image=image)
                 loss = criterion(logits, labels)
 

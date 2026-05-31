@@ -1,8 +1,12 @@
 # Large local data/artifacts
 dataset/
+sources/
+.agent/
 contact_data.zip
 2505.12665v1.pdf
 outputs/
+output/
+latex.tex
 
 # Python
 __pycache__/
@@ -17,3 +21,4 @@ __pycache__/
 # OS/editor
 .DS_Store
 Thumbs.db
+.vscode/

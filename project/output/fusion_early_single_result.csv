@@ -1,2 +1,0 @@
-group,mode,encoder,fusion,classifier,pretrained,frozen,best_epoch,weight_file,paper_f1,paper_precision,paper_recall,macro_f1,macro_precision,macro_recall,accuracy,binary_contact_f1,loss
-pretrained,fusion_early,AST+CLAP+ViT,early,mlp_head,True,True,18,/kaggle/working/outputs/variants/best_fusion_early_model.pt,0.7772133549853278,0.7901829091066601,0.7889990982867449,0.693421012650264,0.7164930844730772,0.699958640629292,0.7889990982867449,0.9342995169082126,2.0227934332338435

@@ -1,0 +1,4940 @@
+{
+  "group": "pretrained",
+  "mode": "pretrained_audio",
+  "fusion": "none",
+  "encoder": "AST+CLAP",
+  "classifier": "mlp_head",
+  "pretrained": true,
+  "frozen": true,
+  "paper_average": "weighted",
+  "best_paper_f1": 0.6859173162994139,
+  "best_epoch": 14,
+  "early_stopping_patience": 10,
+  "min_delta": 0.0001,
+  "best_val_metrics": {
+    "paper_average": "weighted",
+    "paper_f1": 0.6859173162994139,
+    "paper_precision": 0.6771316711622664,
+    "paper_recall": 0.6992786293958522,
+    "macro_f1": 0.5505088380927613,
+    "macro_precision": 0.5618224399906994,
+    "macro_recall": 0.5440885827319906,
+    "weighted_f1": 0.6859173162994139,
+    "weighted_precision": 0.6771316711622664,
+    "weighted_recall": 0.6992786293958522,
+    "accuracy": 0.6992786293958522,
+    "per_class": {
+      "ambient": {
+        "precision": 0.8950320512820513,
+        "recall": 0.9876215738284704,
+        "f1": 0.9390500210172341,
+        "support": 1131
+      },
+      "leaf": {
+        "precision": 0.40671641791044777,
+        "recall": 0.3720136518771331,
+        "f1": 0.38859180035650626,
+        "support": 293
+      },
+      "trunk": {
+        "precision": 0.4340909090909091,
+        "recall": 0.41431670281995664,
+        "f1": 0.4239733629300777,
+        "support": 461
+      },
+      "twig": {
+        "precision": 0.5114503816793893,
+        "recall": 0.4024024024024024,
+        "f1": 0.4504201680672269,
+        "support": 333
+      }
+    },
+    "confusion_matrix": [
+      [
+        1117,
+        12,
+        2,
+        0
+      ],
+      [
+        17,
+        109,
+        121,
+        46
+      ],
+      [
+        96,
+        92,
+        191,
+        82
+      ],
+      [
+        18,
+        55,
+        126,
+        134
+      ]
+    ],
+    "binary_contact_f1": 0.9295089936801166,
+    "binary_contact": {
+      "paper_average": "binary",
+      "paper_f1": 0.9295089936801166,
+      "paper_precision": 0.9855670103092784,
+      "paper_recall": 0.8794848206071757,
+      "binary_contact_f1": 0.9295089936801166,
+      "accuracy": 0.9346257889990983,
+      "per_class": {
+        "non_contact": {
+          "precision": 0.8950320512820513,
+          "recall": 0.9876215738284704,
+          "f1": 0.9390500210172341,
+          "support": 1131
+        },
+        "contact": {
+          "precision": 0.9855670103092784,
+          "recall": 0.8794848206071757,
+          "f1": 0.9295089936801166,
+          "support": 1087
+        }
+      },
+      "confusion_matrix": [
+        [
+          1117,
+          14
+        ],
+        [
+          131,
+          956
+        ]
+      ]
+    },
+    "loss": 0.880421954357444
+  },
+  "weight_file": "/kaggle/working/outputs/variants/best_pretrained_audio_model.pt",
+  "history": [
+    {
+      "epoch": 1,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.70579902721429,
+        "paper_precision": 0.7053764822748058,
+        "paper_recall": 0.7063506931434994,
+        "macro_f1": 0.5119212409403899,
+        "macro_precision": 0.5120647540085186,
+        "macro_recall": 0.511988794935577,
+        "weighted_f1": 0.70579902721429,
+        "weighted_precision": 0.7053764822748058,
+        "weighted_recall": 0.7063506931434994,
+        "accuracy": 0.7063506931434994,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9814474343974595,
+            "recall": 0.9842440496144821,
+            "f1": 0.9828437526152816,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.35804020100502515,
+            "recall": 0.3413173652694611,
+            "f1": 0.3494788473329246,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.3541095890410959,
+            "recall": 0.3502710027100271,
+            "f1": 0.3521798365122616,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.3546617915904936,
+            "recall": 0.3721227621483376,
+            "f1": 0.363182527301092,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5872,
+            30,
+            14,
+            50
+          ],
+          [
+            46,
+            570,
+            476,
+            578
+          ],
+          [
+            45,
+            483,
+            517,
+            431
+          ],
+          [
+            20,
+            509,
+            453,
+            582
+          ]
+        ],
+        "binary_contact_f1": 0.9781984473040519,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9781984473040519,
+          "paper_precision": 0.9799701683358193,
+          "paper_recall": 0.9764331210191083,
+          "binary_contact_f1": 0.9781984473040519,
+          "accuracy": 0.9807980517047583,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9814474343974595,
+              "recall": 0.9842440496144821,
+              "f1": 0.9828437526152816,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9799701683358193,
+              "recall": 0.9764331210191083,
+              "f1": 0.9781984473040519,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5872,
+              94
+            ],
+            [
+              111,
+              4599
+            ]
+          ]
+        },
+        "loss": 0.8135433447501546
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6355027610693903,
+        "paper_precision": 0.624768967047045,
+        "paper_recall": 0.6794409377817854,
+        "macro_f1": 0.46184665905775363,
+        "macro_precision": 0.48786854489302506,
+        "macro_recall": 0.4916684829468262,
+        "weighted_f1": 0.6355027610693903,
+        "weighted_precision": 0.624768967047045,
+        "weighted_recall": 0.6794409377817854,
+        "accuracy": 0.6794409377817854,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8648233486943164,
+            "recall": 0.995579133510168,
+            "f1": 0.9256062474311549,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.25,
+            "recall": 0.017064846416382253,
+            "f1": 0.03194888178913738,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.43568464730290457,
+            "recall": 0.455531453362256,
+            "f1": 0.44538706256627786,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.40096618357487923,
+            "recall": 0.4984984984984985,
+            "f1": 0.4444444444444444,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1126,
+            2,
+            1,
+            2
+          ],
+          [
+            40,
+            5,
+            134,
+            114
+          ],
+          [
+            109,
+            10,
+            210,
+            132
+          ],
+          [
+            27,
+            3,
+            137,
+            166
+          ]
+        ],
+        "binary_contact_f1": 0.90963554667998,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.90963554667998,
+          "paper_precision": 0.9945414847161572,
+          "paper_recall": 0.8380864765409384,
+          "binary_contact_f1": 0.90963554667998,
+          "accuracy": 0.918394950405771,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8648233486943164,
+              "recall": 0.995579133510168,
+              "f1": 0.9256062474311549,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9945414847161572,
+              "recall": 0.8380864765409384,
+              "f1": 0.90963554667998,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1126,
+              5
+            ],
+            [
+              176,
+              911
+            ]
+          ]
+        },
+        "loss": 0.8416634032870597
+      }
+    },
+    {
+      "epoch": 2,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.7621308325681685,
+        "paper_precision": 0.7616068760981158,
+        "paper_recall": 0.764518546272012,
+        "macro_f1": 0.605592277780755,
+        "macro_precision": 0.6048759130279638,
+        "macro_recall": 0.6095695709518185,
+        "weighted_f1": 0.7621308325681685,
+        "weighted_precision": 0.7616068760981158,
+        "weighted_recall": 0.764518546272012,
+        "accuracy": 0.764518546272012,
+        "per_class": {
+          "ambient": {
+            "precision": 0.986782666889744,
+            "recall": 0.988602078444519,
+            "f1": 0.9876915347902537,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.4706227967097532,
+            "recall": 0.47964071856287427,
+            "f1": 0.4750889679715303,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.5328638497652582,
+            "recall": 0.6151761517615176,
+            "f1": 0.5710691823899371,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.42923433874709976,
+            "recall": 0.35485933503836314,
+            "f1": 0.38851942597129857,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5898,
+            32,
+            14,
+            22
+          ],
+          [
+            39,
+            801,
+            350,
+            480
+          ],
+          [
+            37,
+            295,
+            908,
+            236
+          ],
+          [
+            3,
+            574,
+            432,
+            555
+          ]
+        ],
+        "binary_contact_f1": 0.9843766606440641,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9843766606440641,
+          "paper_precision": 0.9855288359225367,
+          "paper_recall": 0.9832271762208068,
+          "binary_contact_f1": 0.9843766606440641,
+          "accuracy": 0.9862307980517048,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.986782666889744,
+              "recall": 0.988602078444519,
+              "f1": 0.9876915347902537,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9855288359225367,
+              "recall": 0.9832271762208068,
+              "f1": 0.9843766606440641,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5898,
+              68
+            ],
+            [
+              79,
+              4631
+            ]
+          ]
+        },
+        "loss": 0.72401763518254
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.5818749617833081,
+        "paper_precision": 0.6203338537979788,
+        "paper_recall": 0.654643823264202,
+        "macro_f1": 0.40585142101301985,
+        "macro_precision": 0.4755493195092715,
+        "macro_recall": 0.4885408642458789,
+        "weighted_f1": 0.5818749617833081,
+        "weighted_precision": 0.6203338537979788,
+        "weighted_recall": 0.654643823264202,
+        "accuracy": 0.654643823264202,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8579067990832697,
+            "recall": 0.9929266136162688,
+            "f1": 0.9204918032786885,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.17543859649122806,
+            "recall": 0.034129692832764506,
+            "f1": 0.05714285714285714,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.5068493150684932,
+            "recall": 0.08026030368763558,
+            "f1": 0.13857677902621723,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.362002567394095,
+            "recall": 0.8468468468468469,
+            "f1": 0.5071942446043165,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1123,
+            5,
+            0,
+            3
+          ],
+          [
+            39,
+            10,
+            19,
+            225
+          ],
+          [
+            119,
+            36,
+            37,
+            269
+          ],
+          [
+            28,
+            6,
+            17,
+            282
+          ]
+        ],
+        "binary_contact_f1": 0.9028056112224448,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9028056112224448,
+          "paper_precision": 0.9911991199119912,
+          "paper_recall": 0.828886844526219,
+          "binary_contact_f1": 0.9028056112224448,
+          "accuracy": 0.9125338142470695,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8579067990832697,
+              "recall": 0.9929266136162688,
+              "f1": 0.9204918032786885,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9911991199119912,
+              "recall": 0.828886844526219,
+              "f1": 0.9028056112224448,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1123,
+              8
+            ],
+            [
+              186,
+              901
+            ]
+          ]
+        },
+        "loss": 0.9477038402681393
+      }
+    },
+    {
+      "epoch": 3,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.7922790619391435,
+        "paper_precision": 0.7912298023049946,
+        "paper_recall": 0.7947733233420757,
+        "macro_f1": 0.6546008094617777,
+        "macro_precision": 0.6539263333867369,
+        "macro_recall": 0.6578015625624667,
+        "weighted_f1": 0.7922790619391435,
+        "weighted_precision": 0.7912298023049946,
+        "weighted_recall": 0.7947733233420757,
+        "accuracy": 0.7947733233420757,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9881548214881548,
+            "recall": 0.9927924907810929,
+            "f1": 0.9904682274247492,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.5550239234449761,
+            "recall": 0.555688622754491,
+            "f1": 0.5553560742070617,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.5964071856287425,
+            "recall": 0.6747967479674797,
+            "f1": 0.6331849968213604,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.4761194029850746,
+            "recall": 0.4079283887468031,
+            "f1": 0.4393939393939394,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5923,
+            19,
+            7,
+            17
+          ],
+          [
+            32,
+            928,
+            248,
+            462
+          ],
+          [
+            34,
+            223,
+            996,
+            223
+          ],
+          [
+            5,
+            502,
+            419,
+            638
+          ]
+        ],
+        "binary_contact_f1": 0.987862010221465,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.987862010221465,
+          "paper_precision": 0.9908158906450235,
+          "paper_recall": 0.9849256900212314,
+          "binary_contact_f1": 0.987862010221465,
+          "accuracy": 0.9893218433870363,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9881548214881548,
+              "recall": 0.9927924907810929,
+              "f1": 0.9904682274247492,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9908158906450235,
+              "recall": 0.9849256900212314,
+              "f1": 0.987862010221465,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5923,
+              43
+            ],
+            [
+              71,
+              4639
+            ]
+          ]
+        },
+        "loss": 0.6707834848957349
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6449021255413272,
+        "paper_precision": 0.6354498089694741,
+        "paper_recall": 0.6587015329125339,
+        "macro_f1": 0.48728946836413317,
+        "macro_precision": 0.4903700936601342,
+        "macro_recall": 0.48809609276382415,
+        "weighted_f1": 0.6449021255413272,
+        "weighted_precision": 0.6354498089694741,
+        "weighted_recall": 0.6587015329125339,
+        "accuracy": 0.6587015329125339,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8972491909385113,
+            "recall": 0.9805481874447391,
+            "f1": 0.9370511195606253,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.288135593220339,
+            "recall": 0.2901023890784983,
+            "f1": 0.2891156462585034,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.4044943820224719,
+            "recall": 0.3123644251626898,
+            "f1": 0.3525091799265606,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.3716012084592145,
+            "recall": 0.36936936936936937,
+            "f1": 0.3704819277108434,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1109,
+            22,
+            0,
+            0
+          ],
+          [
+            17,
+            85,
+            103,
+            88
+          ],
+          [
+            94,
+            103,
+            144,
+            120
+          ],
+          [
+            16,
+            85,
+            109,
+            123
+          ]
+        ],
+        "binary_contact_f1": 0.9279845335911068,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9279845335911068,
+          "paper_precision": 0.9775967413441955,
+          "paper_recall": 0.8831646734130635,
+          "binary_contact_f1": 0.9279845335911068,
+          "accuracy": 0.9328223624887286,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8972491909385113,
+              "recall": 0.9805481874447391,
+              "f1": 0.9370511195606253,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9775967413441955,
+              "recall": 0.8831646734130635,
+              "f1": 0.9279845335911068,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1109,
+              22
+            ],
+            [
+              127,
+              960
+            ]
+          ]
+        },
+        "loss": 0.8483998547463507
+      }
+    },
+    {
+      "epoch": 4,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8090700947109493,
+        "paper_precision": 0.8081515553562183,
+        "paper_recall": 0.8111652304233795,
+        "macro_f1": 0.6835908300954199,
+        "macro_precision": 0.6831282853689729,
+        "macro_recall": 0.68611484425226,
+        "weighted_f1": 0.8090700947109493,
+        "weighted_precision": 0.8081515553562183,
+        "weighted_recall": 0.8111652304233795,
+        "accuracy": 0.8111652304233795,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9869934967483742,
+            "recall": 0.992122024807241,
+            "f1": 0.9895511159408176,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.6100123609394313,
+            "recall": 0.5910179640718562,
+            "f1": 0.6003649635036497,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.6276276276276276,
+            "recall": 0.7079945799457995,
+            "f1": 0.6653931868831582,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.5078796561604585,
+            "recall": 0.4533248081841432,
+            "f1": 0.47905405405405405,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5919,
+            26,
+            9,
+            12
+          ],
+          [
+            33,
+            987,
+            202,
+            448
+          ],
+          [
+            35,
+            169,
+            1045,
+            227
+          ],
+          [
+            10,
+            436,
+            409,
+            709
+          ]
+        ],
+        "binary_contact_f1": 0.9866865480881883,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9866865480881883,
+          "paper_precision": 0.9899551186150887,
+          "paper_recall": 0.9834394904458599,
+          "binary_contact_f1": 0.9866865480881883,
+          "accuracy": 0.9882914949419258,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9869934967483742,
+              "recall": 0.992122024807241,
+              "f1": 0.9895511159408176,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9899551186150887,
+              "recall": 0.9834394904458599,
+              "f1": 0.9866865480881883,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5919,
+              47
+            ],
+            [
+              78,
+              4632
+            ]
+          ]
+        },
+        "loss": 0.6340450152867142
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6540813825529167,
+        "paper_precision": 0.6750112171915802,
+        "paper_recall": 0.6735798016230838,
+        "macro_f1": 0.5114957563872217,
+        "macro_precision": 0.5449139367113116,
+        "macro_recall": 0.5347320636726085,
+        "weighted_f1": 0.6540813825529167,
+        "weighted_precision": 0.6750112171915802,
+        "weighted_recall": 0.6735798016230838,
+        "accuracy": 0.6735798016230838,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9027777777777778,
+            "recall": 0.9770114942528736,
+            "f1": 0.9384288747346072,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.32667876588021777,
+            "recall": 0.6143344709897611,
+            "f1": 0.4265402843601896,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.5,
+            "recall": 0.20824295010845986,
+            "f1": 0.29402756508422667,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.450199203187251,
+            "recall": 0.33933933933933935,
+            "f1": 0.386986301369863,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1105,
+            26,
+            0,
+            0
+          ],
+          [
+            14,
+            180,
+            53,
+            46
+          ],
+          [
+            89,
+            184,
+            96,
+            92
+          ],
+          [
+            16,
+            161,
+            43,
+            113
+          ]
+        ],
+        "binary_contact_f1": 0.9303219605958674,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9303219605958674,
+          "paper_precision": 0.9738430583501007,
+          "paper_recall": 0.890524379024839,
+          "binary_contact_f1": 0.9303219605958674,
+          "accuracy": 0.9346257889990983,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9027777777777778,
+              "recall": 0.9770114942528736,
+              "f1": 0.9384288747346072,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9738430583501007,
+              "recall": 0.890524379024839,
+              "f1": 0.9303219605958674,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1105,
+              26
+            ],
+            [
+              119,
+              968
+            ]
+          ]
+        },
+        "loss": 0.9145153907532455
+      }
+    },
+    {
+      "epoch": 5,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8141115267004017,
+        "paper_precision": 0.8140878082790008,
+        "paper_recall": 0.8167853128512551,
+        "macro_f1": 0.6919617317503666,
+        "macro_precision": 0.6926651045894132,
+        "macro_recall": 0.6958220857992448,
+        "weighted_f1": 0.8141115267004017,
+        "weighted_precision": 0.8140878082790008,
+        "weighted_recall": 0.8167853128512551,
+        "accuracy": 0.8167853128512551,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9876295553326646,
+            "recall": 0.9902782433791485,
+            "f1": 0.9889521258788082,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.6142616507580011,
+            "recall": 0.6550898203592814,
+            "f1": 0.6340191248913358,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.6223692122669874,
+            "recall": 0.7012195121951219,
+            "f1": 0.6594456833386428,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.5464,
+            "recall": 0.4367007672634271,
+            "f1": 0.48542999289267946,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5908,
+            42,
+            8,
+            8
+          ],
+          [
+            29,
+            1094,
+            205,
+            342
+          ],
+          [
+            39,
+            185,
+            1035,
+            217
+          ],
+          [
+            6,
+            460,
+            415,
+            683
+          ]
+        ],
+        "binary_contact_f1": 0.9859634198213526,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9859634198213526,
+          "paper_precision": 0.9876438005965061,
+          "paper_recall": 0.9842887473460722,
+          "binary_contact_f1": 0.9859634198213526,
+          "accuracy": 0.9876358186586737,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9876295553326646,
+              "recall": 0.9902782433791485,
+              "f1": 0.9889521258788082,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9876438005965061,
+              "recall": 0.9842887473460722,
+              "f1": 0.9859634198213526,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5908,
+              58
+            ],
+            [
+              74,
+              4636
+            ]
+          ]
+        },
+        "loss": 0.6239083492997566
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6544584291068849,
+        "paper_precision": 0.671266843078151,
+        "paper_recall": 0.6645626690712354,
+        "macro_f1": 0.5107557325994618,
+        "macro_precision": 0.5310297241388625,
+        "macro_recall": 0.527680732050936,
+        "weighted_f1": 0.6544584291068849,
+        "weighted_precision": 0.671266843078151,
+        "weighted_recall": 0.6645626690712354,
+        "accuracy": 0.6645626690712354,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9168787107718406,
+            "recall": 0.9557913351016799,
+            "f1": 0.935930735930736,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.3092369477911647,
+            "recall": 0.5255972696245734,
+            "f1": 0.3893805309734513,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.48623853211009177,
+            "recall": 0.2299349240780911,
+            "f1": 0.3122238586156112,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.4117647058823529,
+            "recall": 0.3993993993993994,
+            "f1": 0.4054878048780488,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1081,
+            46,
+            0,
+            4
+          ],
+          [
+            9,
+            154,
+            64,
+            66
+          ],
+          [
+            79,
+            156,
+            106,
+            120
+          ],
+          [
+            10,
+            142,
+            48,
+            133
+          ]
+        ],
+        "binary_contact_f1": 0.9303857008466604,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9303857008466604,
+          "paper_precision": 0.9518768046198267,
+          "paper_recall": 0.9098436062557498,
+          "binary_contact_f1": 0.9303857008466604,
+          "accuracy": 0.933273219116321,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9168787107718406,
+              "recall": 0.9557913351016799,
+              "f1": 0.935930735930736,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9518768046198267,
+              "recall": 0.9098436062557498,
+              "f1": 0.9303857008466604,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1081,
+              50
+            ],
+            [
+              98,
+              989
+            ]
+          ]
+        },
+        "loss": 0.8992805388656162
+      }
+    },
+    {
+      "epoch": 6,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8252368512849786,
+        "paper_precision": 0.8250316314004071,
+        "paper_recall": 0.8274634694642188,
+        "macro_f1": 0.7100150530121467,
+        "macro_precision": 0.7104549017094514,
+        "macro_recall": 0.713022706361091,
+        "weighted_f1": 0.8252368512849786,
+        "weighted_precision": 0.8250316314004071,
+        "weighted_recall": 0.8274634694642188,
+        "accuracy": 0.8274634694642188,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9891286168255561,
+            "recall": 0.9912839423399262,
+            "f1": 0.9902051067392215,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.6319290465631929,
+            "recall": 0.6826347305389222,
+            "f1": 0.6563039723661486,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.6556456643792888,
+            "recall": 0.712059620596206,
+            "f1": 0.6826891848002599,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.5651162790697675,
+            "recall": 0.46611253196930946,
+            "f1": 0.5108619481429573,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5914,
+            34,
+            7,
+            11
+          ],
+          [
+            26,
+            1140,
+            158,
+            346
+          ],
+          [
+            35,
+            186,
+            1051,
+            204
+          ],
+          [
+            4,
+            444,
+            387,
+            729
+          ]
+        ],
+        "binary_contact_f1": 0.9875624534920804,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9875624534920804,
+          "paper_precision": 0.9889291036832021,
+          "paper_recall": 0.9861995753715499,
+          "binary_contact_f1": 0.9875624534920804,
+          "accuracy": 0.9890408392656426,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9891286168255561,
+              "recall": 0.9912839423399262,
+              "f1": 0.9902051067392215,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9889291036832021,
+              "recall": 0.9861995753715499,
+              "f1": 0.9875624534920804,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5914,
+              52
+            ],
+            [
+              65,
+              4645
+            ]
+          ]
+        },
+        "loss": 0.6017333632813116
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6416185643979486,
+        "paper_precision": 0.6349067384586303,
+        "paper_recall": 0.6771866546438232,
+        "macro_f1": 0.5191545761432428,
+        "macro_precision": 0.5587166687977048,
+        "macro_recall": 0.5067073840551886,
+        "weighted_f1": 0.6416185643979486,
+        "weighted_precision": 0.6349067384586303,
+        "weighted_recall": 0.6771866546438232,
+        "accuracy": 0.6771866546438232,
+        "per_class": {
+          "ambient": {
+            "precision": 0.7720136518771331,
+            "recall": 1.0,
+            "f1": 0.8713405238828967,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.38497652582159625,
+            "recall": 0.27986348122866894,
+            "f1": 0.3241106719367589,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.4948805460750853,
+            "recall": 0.31453362255965295,
+            "f1": 0.38461538461538464,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.582995951417004,
+            "recall": 0.43243243243243246,
+            "f1": 0.496551724137931,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1131,
+            0,
+            0,
+            0
+          ],
+          [
+            92,
+            82,
+            80,
+            39
+          ],
+          [
+            189,
+            63,
+            145,
+            64
+          ],
+          [
+            53,
+            68,
+            68,
+            144
+          ]
+        ],
+        "binary_contact_f1": 0.8184782608695652,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.8184782608695652,
+          "paper_precision": 1.0,
+          "paper_recall": 0.6927322907083716,
+          "binary_contact_f1": 0.8184782608695652,
+          "accuracy": 0.8494138863841298,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.7720136518771331,
+              "recall": 1.0,
+              "f1": 0.8713405238828967,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 1.0,
+              "recall": 0.6927322907083716,
+              "f1": 0.8184782608695652,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1131,
+              0
+            ],
+            [
+              334,
+              753
+            ]
+          ]
+        },
+        "loss": 1.0840212984574913
+      }
+    },
+    {
+      "epoch": 7,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8236955276509874,
+        "paper_precision": 0.82348382875075,
+        "paper_recall": 0.8266204571000375,
+        "macro_f1": 0.7070371946731512,
+        "macro_precision": 0.7080438631962529,
+        "macro_recall": 0.7106776653170357,
+        "weighted_f1": 0.8236955276509874,
+        "weighted_precision": 0.82348382875075,
+        "weighted_recall": 0.8266204571000375,
+        "accuracy": 0.8266204571000375,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9888165581705892,
+            "recall": 0.9929601072745559,
+            "f1": 0.9908840010035962,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.6281267370761534,
+            "recall": 0.6766467065868264,
+            "f1": 0.6514845776880945,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.651829268292683,
+            "recall": 0.7242547425474255,
+            "f1": 0.6861360718870346,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.5634028892455859,
+            "recall": 0.44884910485933505,
+            "f1": 0.499644128113879,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5924,
+            32,
+            3,
+            7
+          ],
+          [
+            28,
+            1130,
+            168,
+            344
+          ],
+          [
+            35,
+            179,
+            1069,
+            193
+          ],
+          [
+            4,
+            458,
+            400,
+            702
+          ]
+        ],
+        "binary_contact_f1": 0.9883980840872805,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9883980840872805,
+          "paper_precision": 0.9910352187833511,
+          "paper_recall": 0.9857749469214437,
+          "binary_contact_f1": 0.9883980840872805,
+          "accuracy": 0.9897901835893593,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9888165581705892,
+              "recall": 0.9929601072745559,
+              "f1": 0.9908840010035962,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9910352187833511,
+              "recall": 0.9857749469214437,
+              "f1": 0.9883980840872805,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5924,
+              42
+            ],
+            [
+              67,
+              4643
+            ]
+          ]
+        },
+        "loss": 0.6031982453588645
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6502250533273495,
+        "paper_precision": 0.6587616392572118,
+        "paper_recall": 0.6776375112714157,
+        "macro_f1": 0.5103416657618487,
+        "macro_precision": 0.5623488516372867,
+        "macro_recall": 0.5093809216147788,
+        "weighted_f1": 0.6502250533273495,
+        "weighted_precision": 0.6587616392572118,
+        "weighted_recall": 0.6776375112714157,
+        "accuracy": 0.6776375112714157,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8380386329866271,
+            "recall": 0.9973474801061007,
+            "f1": 0.910779168348809,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.34946236559139787,
+            "recall": 0.44368600682593856,
+            "f1": 0.39097744360902253,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.4477211796246649,
+            "recall": 0.36225596529284165,
+            "f1": 0.40047961630695444,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.6141732283464567,
+            "recall": 0.23423423423423423,
+            "f1": 0.3391304347826087,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1128,
+            2,
+            1,
+            0
+          ],
+          [
+            54,
+            130,
+            99,
+            10
+          ],
+          [
+            133,
+            122,
+            167,
+            39
+          ],
+          [
+            31,
+            118,
+            106,
+            78
+          ]
+        ],
+        "binary_contact_f1": 0.8871873404798366,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.8871873404798366,
+          "paper_precision": 0.9965596330275229,
+          "paper_recall": 0.7994480220791168,
+          "binary_contact_f1": 0.8871873404798366,
+          "accuracy": 0.9003606853020739,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8380386329866271,
+              "recall": 0.9973474801061007,
+              "f1": 0.910779168348809,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9965596330275229,
+              "recall": 0.7994480220791168,
+              "f1": 0.8871873404798366,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1128,
+              3
+            ],
+            [
+              218,
+              869
+            ]
+          ]
+        },
+        "loss": 0.9598755867945197
+      }
+    },
+    {
+      "epoch": 8,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8284912199355853,
+        "paper_precision": 0.828941086638949,
+        "paper_recall": 0.8314911952041963,
+        "macro_f1": 0.7153276953189127,
+        "macro_precision": 0.7179165457261664,
+        "macro_recall": 0.7185739752529389,
+        "weighted_f1": 0.8284912199355853,
+        "weighted_precision": 0.828941086638949,
+        "weighted_recall": 0.8314911952041963,
+        "accuracy": 0.8314911952041963,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9879859836475888,
+            "recall": 0.9924572577941669,
+            "f1": 0.9902165732920812,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.6342765616657768,
+            "recall": 0.7113772455089821,
+            "f1": 0.6706181202370872,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.6574827802128992,
+            "recall": 0.7113821138211383,
+            "f1": 0.683371298405467,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.5919208573784006,
+            "recall": 0.45907928388746805,
+            "f1": 0.5171047893410154,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5921,
+            35,
+            4,
+            6
+          ],
+          [
+            32,
+            1188,
+            155,
+            295
+          ],
+          [
+            37,
+            195,
+            1050,
+            194
+          ],
+          [
+            3,
+            455,
+            388,
+            718
+          ]
+        ],
+        "binary_contact_f1": 0.9875439156818908,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9875439156818908,
+          "paper_precision": 0.9903907751441384,
+          "paper_recall": 0.9847133757961783,
+          "binary_contact_f1": 0.9875439156818908,
+          "accuracy": 0.9890408392656426,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9879859836475888,
+              "recall": 0.9924572577941669,
+              "f1": 0.9902165732920812,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9903907751441384,
+              "recall": 0.9847133757961783,
+              "f1": 0.9875439156818908,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5921,
+              45
+            ],
+            [
+              72,
+              4638
+            ]
+          ]
+        },
+        "loss": 0.5862353876916676
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6261906219836315,
+        "paper_precision": 0.6380529891189894,
+        "paper_recall": 0.6627592425608656,
+        "macro_f1": 0.49289997748069303,
+        "macro_precision": 0.5505848995491903,
+        "macro_recall": 0.49530525246619506,
+        "weighted_f1": 0.6261906219836315,
+        "weighted_precision": 0.6380529891189894,
+        "weighted_recall": 0.6627592425608656,
+        "accuracy": 0.6627592425608656,
+        "per_class": {
+          "ambient": {
+            "precision": 0.7953586497890295,
+            "recall": 1.0,
+            "f1": 0.8860164512338425,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.3333333333333333,
+            "recall": 0.4641638225255973,
+            "f1": 0.3880171184022825,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.4723404255319149,
+            "recall": 0.24078091106290672,
+            "f1": 0.31896551724137934,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.6013071895424836,
+            "recall": 0.27627627627627627,
+            "f1": 0.3786008230452675,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1131,
+            0,
+            0,
+            0
+          ],
+          [
+            83,
+            136,
+            57,
+            17
+          ],
+          [
+            168,
+            138,
+            111,
+            44
+          ],
+          [
+            40,
+            134,
+            67,
+            92
+          ]
+        ],
+        "binary_contact_f1": 0.8454593733404142,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.8454593733404142,
+          "paper_precision": 1.0,
+          "paper_recall": 0.7322907083716651,
+          "binary_contact_f1": 0.8454593733404142,
+          "accuracy": 0.8688007213706042,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.7953586497890295,
+              "recall": 1.0,
+              "f1": 0.8860164512338425,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 1.0,
+              "recall": 0.7322907083716651,
+              "f1": 0.8454593733404142,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1131,
+              0
+            ],
+            [
+              291,
+              796
+            ]
+          ]
+        },
+        "loss": 0.9693569117112335
+      }
+    },
+    {
+      "epoch": 9,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8354344732200634,
+        "paper_precision": 0.8358003655711297,
+        "paper_recall": 0.8375796178343949,
+        "macro_f1": 0.7267982058597688,
+        "macro_precision": 0.72777904378916,
+        "macro_recall": 0.7301697355178017,
+        "weighted_f1": 0.8354344732200634,
+        "weighted_precision": 0.8358003655711297,
+        "weighted_recall": 0.8375796178343949,
+        "accuracy": 0.8375796178343949,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9899631983941117,
+            "recall": 0.9919544083137781,
+            "f1": 0.9909578030810449,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.6599770642201835,
+            "recall": 0.6892215568862275,
+            "f1": 0.674282366725249,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.6563245823389021,
+            "recall": 0.7452574525745257,
+            "f1": 0.6979695431472082,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6048513302034428,
+            "recall": 0.4942455242966752,
+            "f1": 0.5439831104855736,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5918,
+            30,
+            9,
+            9
+          ],
+          [
+            29,
+            1151,
+            159,
+            331
+          ],
+          [
+            28,
+            183,
+            1100,
+            165
+          ],
+          [
+            3,
+            380,
+            408,
+            773
+          ]
+        ],
+        "binary_contact_f1": 0.9885204081632653,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9885204081632653,
+          "paper_precision": 0.9897828863346104,
+          "paper_recall": 0.9872611464968153,
+          "binary_contact_f1": 0.9885204081632653,
+          "accuracy": 0.989883851629824,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9899631983941117,
+              "recall": 0.9919544083137781,
+              "f1": 0.9909578030810449,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9897828863346104,
+              "recall": 0.9872611464968153,
+              "f1": 0.9885204081632653,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5918,
+              48
+            ],
+            [
+              60,
+              4650
+            ]
+          ]
+        },
+        "loss": 0.5715107539700607
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6124471340692744,
+        "paper_precision": 0.6100551275639745,
+        "paper_recall": 0.6523895401262398,
+        "macro_f1": 0.4771121803491912,
+        "macro_precision": 0.5153971494302457,
+        "macro_recall": 0.4751890308052531,
+        "weighted_f1": 0.6124471340692744,
+        "weighted_precision": 0.6100551275639745,
+        "weighted_recall": 0.6523895401262398,
+        "accuracy": 0.6523895401262398,
+        "per_class": {
+          "ambient": {
+            "precision": 0.7735978112175103,
+            "recall": 1.0,
+            "f1": 0.8723486309294254,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.31683168316831684,
+            "recall": 0.32764505119453924,
+            "f1": 0.3221476510067114,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.4838709677419355,
+            "recall": 0.227765726681128,
+            "f1": 0.30973451327433627,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.4872881355932203,
+            "recall": 0.34534534534534533,
+            "f1": 0.40421792618629176,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1131,
+            0,
+            0,
+            0
+          ],
+          [
+            102,
+            96,
+            59,
+            36
+          ],
+          [
+            183,
+            88,
+            105,
+            85
+          ],
+          [
+            46,
+            119,
+            53,
+            115
+          ]
+        ],
+        "binary_contact_f1": 0.8204015192620727,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.8204015192620727,
+          "paper_precision": 1.0,
+          "paper_recall": 0.6954921803127875,
+          "binary_contact_f1": 0.8204015192620727,
+          "accuracy": 0.8507664562669072,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.7735978112175103,
+              "recall": 1.0,
+              "f1": 0.8723486309294254,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 1.0,
+              "recall": 0.6954921803127875,
+              "f1": 0.8204015192620727,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1131,
+              0
+            ],
+            [
+              331,
+              756
+            ]
+          ]
+        },
+        "loss": 1.1086910391516978
+      }
+    },
+    {
+      "epoch": 10,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.84102588979713,
+        "paper_precision": 0.840688294196955,
+        "paper_recall": 0.8422630198576245,
+        "macro_f1": 0.7367782048820699,
+        "macro_precision": 0.7365614580045926,
+        "macro_recall": 0.7385554015640123,
+        "weighted_f1": 0.84102588979713,
+        "weighted_precision": 0.840688294196955,
+        "weighted_recall": 0.8422630198576245,
+        "accuracy": 0.8422630198576245,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9891231593038822,
+            "recall": 0.9907810928595374,
+            "f1": 0.9899514319209513,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.684179801517805,
+            "recall": 0.7017964071856287,
+            "f1": 0.6928761454330475,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.674812030075188,
+            "recall": 0.7296747967479674,
+            "f1": 0.701171875,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.5981308411214953,
+            "recall": 0.5319693094629157,
+            "f1": 0.5631133671742808,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5911,
+            43,
+            8,
+            4
+          ],
+          [
+            27,
+            1172,
+            128,
+            343
+          ],
+          [
+            32,
+            155,
+            1077,
+            212
+          ],
+          [
+            6,
+            343,
+            383,
+            832
+          ]
+        ],
+        "binary_contact_f1": 0.9872476089266737,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9872476089266737,
+          "paper_precision": 0.9882978723404255,
+          "paper_recall": 0.9861995753715499,
+          "binary_contact_f1": 0.9872476089266737,
+          "accuracy": 0.9887598351442488,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9891231593038822,
+              "recall": 0.9907810928595374,
+              "f1": 0.9899514319209513,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9882978723404255,
+              "recall": 0.9861995753715499,
+              "f1": 0.9872476089266737,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5911,
+              55
+            ],
+            [
+              65,
+              4645
+            ]
+          ]
+        },
+        "loss": 0.5597423376497537
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.658634012140394,
+        "paper_precision": 0.6536172785706691,
+        "paper_recall": 0.6807935076645627,
+        "macro_f1": 0.5214821726904413,
+        "macro_precision": 0.5411255944765794,
+        "macro_recall": 0.5222566084780565,
+        "weighted_f1": 0.658634012140394,
+        "weighted_precision": 0.6536172785706691,
+        "weighted_recall": 0.6807935076645627,
+        "accuracy": 0.6807935076645627,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8608562691131498,
+            "recall": 0.995579133510168,
+            "f1": 0.923329233292333,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.35561497326203206,
+            "recall": 0.4539249146757679,
+            "f1": 0.3988005997001499,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.4391025641025641,
+            "recall": 0.29718004338394793,
+            "f1": 0.35446313065976714,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.5089285714285714,
+            "recall": 0.34234234234234234,
+            "f1": 0.40933572710951527,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1126,
+            5,
+            0,
+            0
+          ],
+          [
+            41,
+            133,
+            80,
+            39
+          ],
+          [
+            118,
+            135,
+            137,
+            71
+          ],
+          [
+            23,
+            101,
+            95,
+            114
+          ]
+        ],
+        "binary_contact_f1": 0.9063595393089634,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9063595393089634,
+          "paper_precision": 0.9945054945054945,
+          "paper_recall": 0.8325666973321068,
+          "binary_contact_f1": 0.9063595393089634,
+          "accuracy": 0.9156898106402164,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8608562691131498,
+              "recall": 0.995579133510168,
+              "f1": 0.923329233292333,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9945054945054945,
+              "recall": 0.8325666973321068,
+              "f1": 0.9063595393089634,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1126,
+              5
+            ],
+            [
+              182,
+              905
+            ]
+          ]
+        },
+        "loss": 0.9582127851666673
+      }
+    },
+    {
+      "epoch": 11,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8415582690770905,
+        "paper_precision": 0.841285243599819,
+        "paper_recall": 0.8435743724241289,
+        "macro_f1": 0.7369115950079765,
+        "macro_precision": 0.7374594135759072,
+        "macro_recall": 0.7393771197963042,
+        "weighted_f1": 0.8415582690770905,
+        "weighted_precision": 0.841285243599819,
+        "weighted_recall": 0.8435743724241289,
+        "accuracy": 0.8435743724241289,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9893119572478289,
+            "recall": 0.9929601072745559,
+            "f1": 0.9911326752551447,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.6826312752452395,
+            "recall": 0.7083832335329341,
+            "f1": 0.6952688803996474,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.6738066095471236,
+            "recall": 0.7459349593495935,
+            "f1": 0.7080385852090032,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6040878122634368,
+            "recall": 0.510230179028133,
+            "f1": 0.553206239168111,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5924,
+            30,
+            6,
+            6
+          ],
+          [
+            28,
+            1183,
+            142,
+            317
+          ],
+          [
+            35,
+            140,
+            1101,
+            200
+          ],
+          [
+            1,
+            380,
+            385,
+            798
+          ]
+        ],
+        "binary_contact_f1": 0.988721004469036,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.988721004469036,
+          "paper_precision": 0.9910409556313993,
+          "paper_recall": 0.986411889596603,
+          "binary_contact_f1": 0.988721004469036,
+          "accuracy": 0.9900711877107531,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9893119572478289,
+              "recall": 0.9929601072745559,
+              "f1": 0.9911326752551447,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9910409556313993,
+              "recall": 0.986411889596603,
+              "f1": 0.988721004469036,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5924,
+              42
+            ],
+            [
+              64,
+              4646
+            ]
+          ]
+        },
+        "loss": 0.5554374091357898
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6771200598928,
+        "paper_precision": 0.6956098198740236,
+        "paper_recall": 0.6880072137060415,
+        "macro_f1": 0.5434352430740986,
+        "macro_precision": 0.5698026749675722,
+        "macro_recall": 0.5605403355621182,
+        "weighted_f1": 0.6771200598928,
+        "weighted_precision": 0.6956098198740236,
+        "weighted_recall": 0.6880072137060415,
+        "accuracy": 0.6880072137060415,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9175777964676198,
+            "recall": 0.964633068081344,
+            "f1": 0.9405172413793104,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.34146341463414637,
+            "recall": 0.621160409556314,
+            "f1": 0.4406779661016949,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.5102880658436214,
+            "recall": 0.26898047722342733,
+            "f1": 0.3522727272727273,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.5098814229249012,
+            "recall": 0.38738738738738737,
+            "f1": 0.4402730375426621,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1091,
+            40,
+            0,
+            0
+          ],
+          [
+            9,
+            182,
+            63,
+            39
+          ],
+          [
+            77,
+            175,
+            124,
+            85
+          ],
+          [
+            12,
+            136,
+            56,
+            129
+          ]
+        ],
+        "binary_contact_f1": 0.9347826086956522,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9347826086956522,
+          "paper_precision": 0.9611273080660836,
+          "paper_recall": 0.9098436062557498,
+          "binary_contact_f1": 0.9347826086956522,
+          "accuracy": 0.9377817853922452,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9175777964676198,
+              "recall": 0.964633068081344,
+              "f1": 0.9405172413793104,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9611273080660836,
+              "recall": 0.9098436062557498,
+              "f1": 0.9347826086956522,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1091,
+              40
+            ],
+            [
+              98,
+              989
+            ]
+          ]
+        },
+        "loss": 0.8648143886958859
+      }
+    },
+    {
+      "epoch": 12,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8421945572131804,
+        "paper_precision": 0.8415999464141004,
+        "paper_recall": 0.8436680404645934,
+        "macro_f1": 0.7385282574567926,
+        "macro_precision": 0.7384729153443164,
+        "macro_recall": 0.7400805326997653,
+        "weighted_f1": 0.8421945572131804,
+        "weighted_precision": 0.8415999464141004,
+        "weighted_recall": 0.8436680404645934,
+        "accuracy": 0.8436680404645934,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9889669007021064,
+            "recall": 0.9916191753268522,
+            "f1": 0.9902912621359223,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.6830102622576967,
+            "recall": 0.7173652694610778,
+            "f1": 0.6997663551401869,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.6908740359897172,
+            "recall": 0.728319783197832,
+            "f1": 0.7091029023746702,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.5910404624277457,
+            "recall": 0.5230179028132992,
+            "f1": 0.5549525101763908,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5916,
+            37,
+            9,
+            4
+          ],
+          [
+            28,
+            1198,
+            105,
+            339
+          ],
+          [
+            35,
+            143,
+            1075,
+            223
+          ],
+          [
+            3,
+            376,
+            367,
+            818
+          ]
+        ],
+        "binary_contact_f1": 0.9876648234793705,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9876648234793705,
+          "paper_precision": 0.9893481039625053,
+          "paper_recall": 0.9859872611464968,
+          "binary_contact_f1": 0.9876648234793705,
+          "accuracy": 0.9891345073061072,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9889669007021064,
+              "recall": 0.9916191753268522,
+              "f1": 0.9902912621359223,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9893481039625053,
+              "recall": 0.9859872611464968,
+              "f1": 0.9876648234793705,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5916,
+              50
+            ],
+            [
+              66,
+              4644
+            ]
+          ]
+        },
+        "loss": 0.5486271145206424
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6511986643941355,
+        "paper_precision": 0.6593319743621919,
+        "paper_recall": 0.6825969341749324,
+        "macro_f1": 0.5154155873812531,
+        "macro_precision": 0.5418437080425678,
+        "macro_recall": 0.5348046613618972,
+        "weighted_f1": 0.6511986643941355,
+        "weighted_precision": 0.6593319743621919,
+        "weighted_recall": 0.6825969341749324,
+        "accuracy": 0.6825969341749324,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8646153846153846,
+            "recall": 0.9938107869142352,
+            "f1": 0.9247223364870424,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.3517915309446254,
+            "recall": 0.36860068259385664,
+            "f1": 0.36,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.5060240963855421,
+            "recall": 0.1822125813449024,
+            "f1": 0.2679425837320574,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.4449438202247191,
+            "recall": 0.5945945945945946,
+            "f1": 0.5089974293059126,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1124,
+            1,
+            0,
+            6
+          ],
+          [
+            35,
+            108,
+            49,
+            101
+          ],
+          [
+            119,
+            118,
+            84,
+            140
+          ],
+          [
+            22,
+            80,
+            33,
+            198
+          ]
+        ],
+        "binary_contact_f1": 0.9087281795511222,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9087281795511222,
+          "paper_precision": 0.9923747276688453,
+          "paper_recall": 0.8380864765409384,
+          "binary_contact_f1": 0.9087281795511222,
+          "accuracy": 0.9174932371505861,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8646153846153846,
+              "recall": 0.9938107869142352,
+              "f1": 0.9247223364870424,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9923747276688453,
+              "recall": 0.8380864765409384,
+              "f1": 0.9087281795511222,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1124,
+              7
+            ],
+            [
+              176,
+              911
+            ]
+          ]
+        },
+        "loss": 0.997887536735132
+      }
+    },
+    {
+      "epoch": 13,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8474187587043026,
+        "paper_precision": 0.8469296772568394,
+        "paper_recall": 0.8486324466092169,
+        "macro_f1": 0.7471742747362786,
+        "macro_precision": 0.7469675848076414,
+        "macro_recall": 0.7486250602125362,
+        "weighted_f1": 0.8474187587043026,
+        "weighted_precision": 0.8469296772568394,
+        "weighted_recall": 0.8486324466092169,
+        "accuracy": 0.8486324466092169,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9897959183673469,
+            "recall": 0.9917867918203152,
+            "f1": 0.9907903549899532,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.6920854997111496,
+            "recall": 0.7173652694610778,
+            "f1": 0.7044986768597471,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.7005758157389635,
+            "recall": 0.741869918699187,
+            "f1": 0.7206317867719645,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6054131054131054,
+            "recall": 0.5434782608695652,
+            "f1": 0.5727762803234502,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5917,
+            35,
+            6,
+            8
+          ],
+          [
+            29,
+            1198,
+            105,
+            338
+          ],
+          [
+            30,
+            143,
+            1095,
+            208
+          ],
+          [
+            2,
+            355,
+            357,
+            850
+          ]
+        ],
+        "binary_contact_f1": 0.9883078231292517,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9883078231292517,
+          "paper_precision": 0.9895700297999148,
+          "paper_recall": 0.9870488322717622,
+          "binary_contact_f1": 0.9883078231292517,
+          "accuracy": 0.9896965155488947,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9897959183673469,
+              "recall": 0.9917867918203152,
+              "f1": 0.9907903549899532,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9895700297999148,
+              "recall": 0.9870488322717622,
+              "f1": 0.9883078231292517,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5917,
+              49
+            ],
+            [
+              61,
+              4649
+            ]
+          ]
+        },
+        "loss": 0.544370471539814
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.65821085698182,
+        "paper_precision": 0.6574712628480918,
+        "paper_recall": 0.6844003606853021,
+        "macro_f1": 0.515588253788878,
+        "macro_precision": 0.5340031831967316,
+        "macro_recall": 0.5277618424961228,
+        "weighted_f1": 0.65821085698182,
+        "weighted_precision": 0.6574712628480918,
+        "weighted_recall": 0.6844003606853021,
+        "accuracy": 0.6844003606853021,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8725718725718725,
+            "recall": 0.9929266136162688,
+            "f1": 0.9288668320926385,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.3333333333333333,
+            "recall": 0.2593856655290102,
+            "f1": 0.29174664107485604,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.5,
+            "recall": 0.25813449023861174,
+            "f1": 0.34048640915593703,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.43010752688172044,
+            "recall": 0.6006006006006006,
+            "f1": 0.5012531328320802,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1123,
+            3,
+            1,
+            4
+          ],
+          [
+            31,
+            76,
+            69,
+            117
+          ],
+          [
+            114,
+            84,
+            119,
+            144
+          ],
+          [
+            19,
+            65,
+            49,
+            200
+          ]
+        ],
+        "binary_contact_f1": 0.9147670961347869,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9147670961347869,
+          "paper_precision": 0.99140708915145,
+          "paper_recall": 0.8491260349586016,
+          "binary_contact_f1": 0.9147670961347869,
+          "accuracy": 0.9224526600541028,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8725718725718725,
+              "recall": 0.9929266136162688,
+              "f1": 0.9288668320926385,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.99140708915145,
+              "recall": 0.8491260349586016,
+              "f1": 0.9147670961347869,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1123,
+              8
+            ],
+            [
+              164,
+              923
+            ]
+          ]
+        },
+        "loss": 0.9398712009112573
+      }
+    },
+    {
+      "epoch": 14,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8441870713481961,
+        "paper_precision": 0.843505784141786,
+        "paper_recall": 0.8454477332334207,
+        "macro_f1": 0.7415168709744101,
+        "macro_precision": 0.7416016131547356,
+        "macro_recall": 0.7424245332638186,
+        "weighted_f1": 0.8441870713481961,
+        "weighted_precision": 0.843505784141786,
+        "weighted_recall": 0.8454477332334207,
+        "accuracy": 0.8454477332334207,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9889797962932042,
+            "recall": 0.9927924907810929,
+            "f1": 0.9908824759514847,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.6899766899766899,
+            "recall": 0.7089820359281437,
+            "f1": 0.6993502658003544,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.6911196911196911,
+            "recall": 0.7276422764227642,
+            "f1": 0.7089108910891089,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.5963302752293578,
+            "recall": 0.5402813299232737,
+            "f1": 0.5669238510566924,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5923,
+            31,
+            5,
+            7
+          ],
+          [
+            30,
+            1184,
+            119,
+            337
+          ],
+          [
+            34,
+            140,
+            1074,
+            228
+          ],
+          [
+            2,
+            361,
+            356,
+            845
+          ]
+        ],
+        "binary_contact_f1": 0.9884005533680962,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9884005533680962,
+          "paper_precision": 0.9908256880733946,
+          "paper_recall": 0.9859872611464968,
+          "binary_contact_f1": 0.9884005533680962,
+          "accuracy": 0.9897901835893593,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9889797962932042,
+              "recall": 0.9927924907810929,
+              "f1": 0.9908824759514847,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9908256880733946,
+              "recall": 0.9859872611464968,
+              "f1": 0.9884005533680962,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5923,
+              43
+            ],
+            [
+              66,
+              4644
+            ]
+          ]
+        },
+        "loss": 0.5449911289518289
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6859173162994139,
+        "paper_precision": 0.6771316711622664,
+        "paper_recall": 0.6992786293958522,
+        "macro_f1": 0.5505088380927613,
+        "macro_precision": 0.5618224399906994,
+        "macro_recall": 0.5440885827319906,
+        "weighted_f1": 0.6859173162994139,
+        "weighted_precision": 0.6771316711622664,
+        "weighted_recall": 0.6992786293958522,
+        "accuracy": 0.6992786293958522,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8950320512820513,
+            "recall": 0.9876215738284704,
+            "f1": 0.9390500210172341,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.40671641791044777,
+            "recall": 0.3720136518771331,
+            "f1": 0.38859180035650626,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.4340909090909091,
+            "recall": 0.41431670281995664,
+            "f1": 0.4239733629300777,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.5114503816793893,
+            "recall": 0.4024024024024024,
+            "f1": 0.4504201680672269,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1117,
+            12,
+            2,
+            0
+          ],
+          [
+            17,
+            109,
+            121,
+            46
+          ],
+          [
+            96,
+            92,
+            191,
+            82
+          ],
+          [
+            18,
+            55,
+            126,
+            134
+          ]
+        ],
+        "binary_contact_f1": 0.9295089936801166,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9295089936801166,
+          "paper_precision": 0.9855670103092784,
+          "paper_recall": 0.8794848206071757,
+          "binary_contact_f1": 0.9295089936801166,
+          "accuracy": 0.9346257889990983,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8950320512820513,
+              "recall": 0.9876215738284704,
+              "f1": 0.9390500210172341,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9855670103092784,
+              "recall": 0.8794848206071757,
+              "f1": 0.9295089936801166,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1117,
+              14
+            ],
+            [
+              131,
+              956
+            ]
+          ]
+        },
+        "loss": 0.880421954357444
+      }
+    },
+    {
+      "epoch": 15,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8514195283463126,
+        "paper_precision": 0.8507144115416926,
+        "paper_recall": 0.8528475084301237,
+        "macro_f1": 0.7535147173012818,
+        "macro_precision": 0.7537000019270844,
+        "macro_recall": 0.7545806112349251,
+        "weighted_f1": 0.8514195283463126,
+        "weighted_precision": 0.8507144115416926,
+        "weighted_recall": 0.8528475084301237,
+        "accuracy": 0.8528475084301237,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9886572143452877,
+            "recall": 0.9934629567549447,
+            "f1": 0.9910542596772846,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.7210682492581603,
+            "recall": 0.7275449101796407,
+            "f1": 0.7242921013412816,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.6979823455233292,
+            "recall": 0.75,
+            "f1": 0.7230568256041803,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6070921985815603,
+            "recall": 0.5473145780051151,
+            "f1": 0.5756556825823806,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5927,
+            27,
+            9,
+            3
+          ],
+          [
+            26,
+            1215,
+            98,
+            331
+          ],
+          [
+            36,
+            113,
+            1107,
+            220
+          ],
+          [
+            6,
+            330,
+            372,
+            856
+          ]
+        ],
+        "binary_contact_f1": 0.9886061122351187,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9886061122351187,
+          "paper_precision": 0.9916684469130528,
+          "paper_recall": 0.9855626326963907,
+          "binary_contact_f1": 0.9886061122351187,
+          "accuracy": 0.9899775196702885,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9886572143452877,
+              "recall": 0.9934629567549447,
+              "f1": 0.9910542596772846,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9916684469130528,
+              "recall": 0.9855626326963907,
+              "f1": 0.9886061122351187,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5927,
+              39
+            ],
+            [
+              68,
+              4642
+            ]
+          ]
+        },
+        "loss": 0.5316892753727873
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6658705678900463,
+        "paper_precision": 0.6802534130727422,
+        "paper_recall": 0.6807935076645627,
+        "macro_f1": 0.5208819563971699,
+        "macro_precision": 0.5541649641556652,
+        "macro_recall": 0.5359458550187854,
+        "weighted_f1": 0.6658705678900463,
+        "weighted_precision": 0.6802534130727422,
+        "weighted_recall": 0.6807935076645627,
+        "accuracy": 0.6807935076645627,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9121789560894781,
+            "recall": 0.9734748010610079,
+            "f1": 0.941830624465355,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.34577603143418467,
+            "recall": 0.6006825938566553,
+            "f1": 0.4389027431421446,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.44192634560906513,
+            "recall": 0.3383947939262473,
+            "f1": 0.3832923832923833,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.5167785234899329,
+            "recall": 0.23123123123123124,
+            "f1": 0.31950207468879666,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1101,
+            30,
+            0,
+            0
+          ],
+          [
+            10,
+            176,
+            89,
+            18
+          ],
+          [
+            83,
+            168,
+            156,
+            54
+          ],
+          [
+            13,
+            135,
+            108,
+            77
+          ]
+        ],
+        "binary_contact_f1": 0.9351763584366063,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9351763584366063,
+          "paper_precision": 0.9703264094955489,
+          "paper_recall": 0.9024839006439742,
+          "binary_contact_f1": 0.9351763584366063,
+          "accuracy": 0.9386834986474302,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9121789560894781,
+              "recall": 0.9734748010610079,
+              "f1": 0.941830624465355,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9703264094955489,
+              "recall": 0.9024839006439742,
+              "f1": 0.9351763584366063,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1101,
+              30
+            ],
+            [
+              106,
+              981
+            ]
+          ]
+        },
+        "loss": 0.910084450670339
+      }
+    },
+    {
+      "epoch": 16,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8535728766623065,
+        "paper_precision": 0.8532032883099948,
+        "paper_recall": 0.8547208692394155,
+        "macro_f1": 0.7575259800645986,
+        "macro_precision": 0.7576596345843982,
+        "macro_recall": 0.7587312275213195,
+        "weighted_f1": 0.8535728766623065,
+        "weighted_precision": 0.8532032883099948,
+        "weighted_recall": 0.8547208692394155,
+        "accuracy": 0.8547208692394155,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9896338404949006,
+            "recall": 0.992122024807241,
+            "f1": 0.99087637063698,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.703768115942029,
+            "recall": 0.7269461077844311,
+            "f1": 0.7151693667157585,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.7055449330783938,
+            "recall": 0.75,
+            "f1": 0.7270935960591133,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6316916488222698,
+            "recall": 0.5658567774936062,
+            "f1": 0.596964586846543,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5919,
+            35,
+            7,
+            5
+          ],
+          [
+            29,
+            1214,
+            111,
+            316
+          ],
+          [
+            31,
+            143,
+            1107,
+            195
+          ],
+          [
+            2,
+            333,
+            344,
+            885
+          ]
+        ],
+        "binary_contact_f1": 0.9884104199893674,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9884104199893674,
+          "paper_precision": 0.9899893503727369,
+          "paper_recall": 0.9868365180467091,
+          "binary_contact_f1": 0.9884104199893674,
+          "accuracy": 0.9897901835893593,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9896338404949006,
+              "recall": 0.992122024807241,
+              "f1": 0.99087637063698,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9899893503727369,
+              "recall": 0.9868365180467091,
+              "f1": 0.9884104199893674,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5919,
+              47
+            ],
+            [
+              62,
+              4648
+            ]
+          ]
+        },
+        "loss": 0.525061765521501
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6694208294389395,
+        "paper_precision": 0.6674407310218423,
+        "paper_recall": 0.693868349864743,
+        "macro_f1": 0.523971776510211,
+        "macro_precision": 0.5645838235903055,
+        "macro_recall": 0.5155437386555961,
+        "weighted_f1": 0.6694208294389395,
+        "weighted_precision": 0.6674407310218423,
+        "weighted_recall": 0.693868349864743,
+        "accuracy": 0.693868349864743,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8652373660030628,
+            "recall": 0.9991158267020336,
+            "f1": 0.9273697168649979,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.4057142857142857,
+            "recall": 0.24232081911262798,
+            "f1": 0.3034188034188034,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.42286751361161523,
+            "recall": 0.5054229934924078,
+            "f1": 0.46047430830039526,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.5645161290322581,
+            "recall": 0.3153153153153153,
+            "f1": 0.4046242774566474,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1130,
+            1,
+            0,
+            0
+          ],
+          [
+            38,
+            71,
+            152,
+            32
+          ],
+          [
+            117,
+            62,
+            233,
+            49
+          ],
+          [
+            21,
+            41,
+            166,
+            105
+          ]
+        ],
+        "binary_contact_f1": 0.9114557278639319,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9114557278639319,
+          "paper_precision": 0.9989035087719298,
+          "paper_recall": 0.8380864765409384,
+          "binary_contact_f1": 0.9114557278639319,
+          "accuracy": 0.9201983769161407,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8652373660030628,
+              "recall": 0.9991158267020336,
+              "f1": 0.9273697168649979,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9989035087719298,
+              "recall": 0.8380864765409384,
+              "f1": 0.9114557278639319,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1130,
+              1
+            ],
+            [
+              176,
+              911
+            ]
+          ]
+        },
+        "loss": 1.0599810198399535
+      }
+    },
+    {
+      "epoch": 17,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8497826139689167,
+        "paper_precision": 0.8494331272072463,
+        "paper_recall": 0.8504121393780442,
+        "macro_f1": 0.7519124572043336,
+        "macro_precision": 0.7519230882176619,
+        "macro_recall": 0.7523911436866337,
+        "weighted_f1": 0.8497826139689167,
+        "weighted_precision": 0.8494331272072463,
+        "weighted_recall": 0.8504121393780442,
+        "accuracy": 0.8504121393780442,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9881330436236002,
+            "recall": 0.9909487093530004,
+            "f1": 0.9895388735459034,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.7148080438756855,
+            "recall": 0.7023952095808383,
+            "f1": 0.7085472666868016,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.6933418693982074,
+            "recall": 0.733739837398374,
+            "f1": 0.7129690585911784,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6114093959731544,
+            "recall": 0.5824808184143222,
+            "f1": 0.5965946299934513,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5912,
+            41,
+            8,
+            5
+          ],
+          [
+            33,
+            1173,
+            125,
+            339
+          ],
+          [
+            35,
+            123,
+            1083,
+            235
+          ],
+          [
+            3,
+            304,
+            346,
+            911
+          ]
+        ],
+        "binary_contact_f1": 0.9867063703073488,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9867063703073488,
+          "paper_precision": 0.9884935009588749,
+          "paper_recall": 0.9849256900212314,
+          "binary_contact_f1": 0.9867063703073488,
+          "accuracy": 0.9882914949419258,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9881330436236002,
+              "recall": 0.9909487093530004,
+              "f1": 0.9895388735459034,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9884935009588749,
+              "recall": 0.9849256900212314,
+              "f1": 0.9867063703073488,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5912,
+              54
+            ],
+            [
+              71,
+              4639
+            ]
+          ]
+        },
+        "loss": 0.5311117843490474
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6699483418737793,
+        "paper_precision": 0.6722954022253652,
+        "paper_recall": 0.6848512173128944,
+        "macro_f1": 0.5250701269166418,
+        "macro_precision": 0.5558719881663406,
+        "macro_recall": 0.5203210153830087,
+        "weighted_f1": 0.6699483418737793,
+        "weighted_precision": 0.6722954022253652,
+        "weighted_recall": 0.6848512173128944,
+        "accuracy": 0.6848512173128944,
+        "per_class": {
+          "ambient": {
+            "precision": 0.894524959742351,
+            "recall": 0.982316534040672,
+            "f1": 0.9363674673409187,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.3675496688741722,
+            "recall": 0.378839590443686,
+            "f1": 0.373109243697479,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.40313111545988256,
+            "recall": 0.44685466377440347,
+            "f1": 0.42386831275720166,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.558282208588957,
+            "recall": 0.2732732732732733,
+            "f1": 0.36693548387096775,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1111,
+            15,
+            5,
+            0
+          ],
+          [
+            19,
+            111,
+            140,
+            23
+          ],
+          [
+            97,
+            109,
+            206,
+            49
+          ],
+          [
+            15,
+            67,
+            160,
+            91
+          ]
+        ],
+        "binary_contact_f1": 0.926805622879302,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.926805622879302,
+          "paper_precision": 0.9795081967213115,
+          "paper_recall": 0.8794848206071757,
+          "binary_contact_f1": 0.926805622879302,
+          "accuracy": 0.9319206492335438,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.894524959742351,
+              "recall": 0.982316534040672,
+              "f1": 0.9363674673409187,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9795081967213115,
+              "recall": 0.8794848206071757,
+              "f1": 0.926805622879302,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1111,
+              20
+            ],
+            [
+              131,
+              956
+            ]
+          ]
+        },
+        "loss": 0.8875362270543599
+      }
+    },
+    {
+      "epoch": 18,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8501025524908329,
+        "paper_precision": 0.8495767710400571,
+        "paper_recall": 0.8509741476208318,
+        "macro_f1": 0.7518123785345951,
+        "macro_precision": 0.7516384228613332,
+        "macro_recall": 0.7525843349137109,
+        "weighted_f1": 0.8501025524908329,
+        "weighted_precision": 0.8495767710400571,
+        "weighted_recall": 0.8509741476208318,
+        "accuracy": 0.8509741476208318,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9892994482528006,
+            "recall": 0.9917867918203152,
+            "f1": 0.9905415585502637,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.7064382752510336,
+            "recall": 0.7161676646706587,
+            "f1": 0.7112696996729111,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.7039431157078216,
+            "recall": 0.7378048780487805,
+            "f1": 0.7204763479986768,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6068728522336769,
+            "recall": 0.5645780051150895,
+            "f1": 0.5849619079165287,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5917,
+            36,
+            8,
+            5
+          ],
+          [
+            26,
+            1196,
+            107,
+            341
+          ],
+          [
+            35,
+            126,
+            1089,
+            226
+          ],
+          [
+            3,
+            335,
+            343,
+            883
+          ]
+        ],
+        "binary_contact_f1": 0.9879851143009037,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9879851143009037,
+          "paper_precision": 0.9895633652822151,
+          "paper_recall": 0.986411889596603,
+          "binary_contact_f1": 0.9879851143009037,
+          "accuracy": 0.989415511427501,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9892994482528006,
+              "recall": 0.9917867918203152,
+              "f1": 0.9905415585502637,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9895633652822151,
+              "recall": 0.986411889596603,
+              "f1": 0.9879851143009037,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5917,
+              49
+            ],
+            [
+              64,
+              4646
+            ]
+          ]
+        },
+        "loss": 0.5305371565744106
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6775689174122684,
+        "paper_precision": 0.672779416135317,
+        "paper_recall": 0.6992786293958522,
+        "macro_f1": 0.5452646316914527,
+        "macro_precision": 0.5601502928849165,
+        "macro_recall": 0.5492864533789913,
+        "weighted_f1": 0.6775689174122684,
+        "weighted_precision": 0.672779416135317,
+        "weighted_recall": 0.6992786293958522,
+        "accuracy": 0.6992786293958522,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8711180124223602,
+            "recall": 0.9920424403183024,
+            "f1": 0.9276560562215792,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.38333333333333336,
+            "recall": 0.31399317406143346,
+            "f1": 0.3452157598499062,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.5178571428571429,
+            "recall": 0.31453362255965295,
+            "f1": 0.3913630229419703,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.4682926829268293,
+            "recall": 0.5765765765765766,
+            "f1": 0.5168236877523553,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1122,
+            5,
+            2,
+            2
+          ],
+          [
+            28,
+            92,
+            70,
+            103
+          ],
+          [
+            116,
+            87,
+            145,
+            113
+          ],
+          [
+            22,
+            56,
+            63,
+            192
+          ]
+        ],
+        "binary_contact_f1": 0.9132374814080317,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9132374814080317,
+          "paper_precision": 0.9903225806451613,
+          "paper_recall": 0.8472861085556578,
+          "binary_contact_f1": 0.9132374814080317,
+          "accuracy": 0.9211000901713255,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8711180124223602,
+              "recall": 0.9920424403183024,
+              "f1": 0.9276560562215792,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9903225806451613,
+              "recall": 0.8472861085556578,
+              "f1": 0.9132374814080317,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1122,
+              9
+            ],
+            [
+              166,
+              921
+            ]
+          ]
+        },
+        "loss": 0.918748829345831
+      }
+    },
+    {
+      "epoch": 19,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8559116020068774,
+        "paper_precision": 0.8554595593550492,
+        "paper_recall": 0.856687898089172,
+        "macro_f1": 0.7612522761466862,
+        "macro_precision": 0.7611851250213792,
+        "macro_recall": 0.7618720696265372,
+        "weighted_f1": 0.8559116020068774,
+        "weighted_precision": 0.8554595593550492,
+        "weighted_recall": 0.856687898089172,
+        "accuracy": 0.856687898089172,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9899631983941117,
+            "recall": 0.9919544083137781,
+            "f1": 0.9909578030810449,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.716365754222481,
+            "recall": 0.7365269461077845,
+            "f1": 0.7263064658990257,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.7140983606557377,
+            "recall": 0.7378048780487805,
+            "f1": 0.7257580806397868,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6243131868131868,
+            "recall": 0.5812020460358056,
+            "f1": 0.6019867549668875,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5918,
+            38,
+            6,
+            4
+          ],
+          [
+            24,
+            1230,
+            98,
+            318
+          ],
+          [
+            33,
+            129,
+            1089,
+            225
+          ],
+          [
+            3,
+            320,
+            332,
+            909
+          ]
+        ],
+        "binary_contact_f1": 0.9885204081632653,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9885204081632653,
+          "paper_precision": 0.9897828863346104,
+          "paper_recall": 0.9872611464968153,
+          "binary_contact_f1": 0.9885204081632653,
+          "accuracy": 0.989883851629824,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9899631983941117,
+              "recall": 0.9919544083137781,
+              "f1": 0.9909578030810449,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9897828863346104,
+              "recall": 0.9872611464968153,
+              "f1": 0.9885204081632653,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5918,
+              48
+            ],
+            [
+              60,
+              4650
+            ]
+          ]
+        },
+        "loss": 0.513884111008781
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6817627411603617,
+        "paper_precision": 0.671522537044718,
+        "paper_recall": 0.6974752028854824,
+        "macro_f1": 0.5469701303648691,
+        "macro_precision": 0.5564237148181876,
+        "macro_recall": 0.5422951276563129,
+        "weighted_f1": 0.6817627411603617,
+        "weighted_precision": 0.671522537044718,
+        "weighted_recall": 0.6974752028854824,
+        "accuracy": 0.6974752028854824,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8848580441640379,
+            "recall": 0.9920424403183024,
+            "f1": 0.9353897457273864,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.3829787234042553,
+            "recall": 0.36860068259385664,
+            "f1": 0.37565217391304345,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.4490861618798956,
+            "recall": 0.37310195227765725,
+            "f1": 0.4075829383886256,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.5087719298245614,
+            "recall": 0.43543543543543545,
+            "f1": 0.4692556634304207,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1122,
+            5,
+            3,
+            1
+          ],
+          [
+            22,
+            108,
+            104,
+            59
+          ],
+          [
+            106,
+            103,
+            172,
+            80
+          ],
+          [
+            18,
+            66,
+            104,
+            145
+          ]
+        ],
+        "binary_contact_f1": 0.9239077074128621,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9239077074128621,
+          "paper_precision": 0.9905263157894737,
+          "paper_recall": 0.8656853725850966,
+          "binary_contact_f1": 0.9239077074128621,
+          "accuracy": 0.930117222723174,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8848580441640379,
+              "recall": 0.9920424403183024,
+              "f1": 0.9353897457273864,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9905263157894737,
+              "recall": 0.8656853725850966,
+              "f1": 0.9239077074128621,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1122,
+              9
+            ],
+            [
+              146,
+              941
+            ]
+          ]
+        },
+        "loss": 1.0011582509324801
+      }
+    },
+    {
+      "epoch": 20,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8577804954729812,
+        "paper_precision": 0.8573826534966649,
+        "paper_recall": 0.85828025477707,
+        "macro_f1": 0.7646790133171774,
+        "macro_precision": 0.7646948859767462,
+        "macro_recall": 0.7648387990292709,
+        "weighted_f1": 0.8577804954729812,
+        "weighted_precision": 0.8573826534966649,
+        "weighted_recall": 0.85828025477707,
+        "accuracy": 0.85828025477707,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9896321070234114,
+            "recall": 0.9919544083137781,
+            "f1": 0.990791896869245,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.7240143369175627,
+            "recall": 0.725748502994012,
+            "f1": 0.7248803827751196,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.7229551451187335,
+            "recall": 0.7425474254742548,
+            "f1": 0.732620320855615,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6221779548472776,
+            "recall": 0.5991048593350383,
+            "f1": 0.6104234527687297,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5918,
+            39,
+            6,
+            3
+          ],
+          [
+            25,
+            1212,
+            92,
+            341
+          ],
+          [
+            34,
+            121,
+            1096,
+            225
+          ],
+          [
+            3,
+            302,
+            322,
+            937
+          ]
+        ],
+        "binary_contact_f1": 0.9883053370189241,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9883053370189241,
+          "paper_precision": 0.989778534923339,
+          "paper_recall": 0.9868365180467091,
+          "binary_contact_f1": 0.9883053370189241,
+          "accuracy": 0.9896965155488947,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9896321070234114,
+              "recall": 0.9919544083137781,
+              "f1": 0.990791896869245,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.989778534923339,
+              "recall": 0.9868365180467091,
+              "f1": 0.9883053370189241,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5918,
+              48
+            ],
+            [
+              62,
+              4648
+            ]
+          ]
+        },
+        "loss": 0.5100543743486905
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6823839518033207,
+        "paper_precision": 0.6812441664049439,
+        "paper_recall": 0.690712353471596,
+        "macro_f1": 0.5447722428023002,
+        "macro_precision": 0.5549204754754329,
+        "macro_recall": 0.5452462507630887,
+        "weighted_f1": 0.6823839518033207,
+        "weighted_precision": 0.6812441664049439,
+        "weighted_recall": 0.690712353471596,
+        "accuracy": 0.690712353471596,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9128630705394191,
+            "recall": 0.9725906277630415,
+            "f1": 0.9417808219178082,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.35340314136125656,
+            "recall": 0.46075085324232085,
+            "f1": 0.4,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.44935064935064933,
+            "recall": 0.3752711496746204,
+            "f1": 0.408983451536643,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.5040650406504065,
+            "recall": 0.37237237237237236,
+            "f1": 0.4283246977547496,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1100,
+            31,
+            0,
+            0
+          ],
+          [
+            10,
+            135,
+            104,
+            44
+          ],
+          [
+            83,
+            127,
+            173,
+            78
+          ],
+          [
+            12,
+            89,
+            108,
+            124
+          ]
+        ],
+        "binary_contact_f1": 0.9352380952380952,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9352380952380952,
+          "paper_precision": 0.9693978282329714,
+          "paper_recall": 0.9034038638454461,
+          "binary_contact_f1": 0.9352380952380952,
+          "accuracy": 0.9386834986474302,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9128630705394191,
+              "recall": 0.9725906277630415,
+              "f1": 0.9417808219178082,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9693978282329714,
+              "recall": 0.9034038638454461,
+              "f1": 0.9352380952380952,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1100,
+              31
+            ],
+            [
+              105,
+              982
+            ]
+          ]
+        },
+        "loss": 0.8837488456154737
+      }
+    },
+    {
+      "epoch": 21,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8578887815098014,
+        "paper_precision": 0.857437898793125,
+        "paper_recall": 0.8594042712626452,
+        "macro_f1": 0.76451390421532,
+        "macro_precision": 0.7651239050213618,
+        "macro_recall": 0.7657141640659458,
+        "weighted_f1": 0.8578887815098014,
+        "weighted_precision": 0.857437898793125,
+        "weighted_recall": 0.8594042712626452,
+        "accuracy": 0.8594042712626452,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9891467690766405,
+            "recall": 0.9929601072745559,
+            "f1": 0.9910497699707236,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.717292377701934,
+            "recall": 0.7550898203592814,
+            "f1": 0.735705950991832,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.714377406931964,
+            "recall": 0.7540650406504065,
+            "f1": 0.7336849044166117,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6396790663749088,
+            "recall": 0.5607416879795396,
+            "f1": 0.5976149914821124,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5924,
+            27,
+            9,
+            6
+          ],
+          [
+            24,
+            1261,
+            100,
+            285
+          ],
+          [
+            35,
+            125,
+            1113,
+            203
+          ],
+          [
+            6,
+            345,
+            336,
+            877
+          ]
+        ],
+        "binary_contact_f1": 0.9886133872512504,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9886133872512504,
+          "paper_precision": 0.9910390441647109,
+          "paper_recall": 0.9861995753715499,
+          "binary_contact_f1": 0.9886133872512504,
+          "accuracy": 0.9899775196702885,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9891467690766405,
+              "recall": 0.9929601072745559,
+              "f1": 0.9910497699707236,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9910390441647109,
+              "recall": 0.9861995753715499,
+              "f1": 0.9886133872512504,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5924,
+              42
+            ],
+            [
+              65,
+              4645
+            ]
+          ]
+        },
+        "loss": 0.5087616813409921
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6439497669287075,
+        "paper_precision": 0.6884222248477274,
+        "paper_recall": 0.6668169522091975,
+        "macro_f1": 0.503427743703528,
+        "macro_precision": 0.5617042325865855,
+        "macro_recall": 0.5437109361163073,
+        "weighted_f1": 0.6439497669287075,
+        "weighted_precision": 0.6884222248477274,
+        "weighted_recall": 0.6668169522091975,
+        "accuracy": 0.6668169522091975,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9100840336134454,
+            "recall": 0.9575596816976127,
+            "f1": 0.933218440327445,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.3214814814814815,
+            "recall": 0.7406143344709898,
+            "f1": 0.44834710743801653,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.5104895104895105,
+            "recall": 0.15835140997830802,
+            "f1": 0.24172185430463577,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.5047619047619047,
+            "recall": 0.3183183183183183,
+            "f1": 0.39042357274401474,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1083,
+            48,
+            0,
+            0
+          ],
+          [
+            10,
+            217,
+            36,
+            30
+          ],
+          [
+            84,
+            230,
+            73,
+            74
+          ],
+          [
+            13,
+            180,
+            34,
+            106
+          ]
+        ],
+        "binary_contact_f1": 0.9267139479905437,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9267139479905437,
+          "paper_precision": 0.953307392996109,
+          "paper_recall": 0.9015639374425023,
+          "binary_contact_f1": 0.9267139479905437,
+          "accuracy": 0.930117222723174,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9100840336134454,
+              "recall": 0.9575596816976127,
+              "f1": 0.933218440327445,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.953307392996109,
+              "recall": 0.9015639374425023,
+              "f1": 0.9267139479905437,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1083,
+              48
+            ],
+            [
+              107,
+              980
+            ]
+          ]
+        },
+        "loss": 0.9353213023841113
+      }
+    },
+    {
+      "epoch": 22,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8614757286609417,
+        "paper_precision": 0.8610046642689952,
+        "paper_recall": 0.8623079805170476,
+        "macro_f1": 0.769980159245802,
+        "macro_precision": 0.7698909829010131,
+        "macro_recall": 0.7706942378358177,
+        "weighted_f1": 0.8614757286609417,
+        "weighted_precision": 0.8610046642689952,
+        "weighted_recall": 0.8623079805170476,
+        "accuracy": 0.8623079805170476,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9908042133422504,
+            "recall": 0.9932953402614817,
+            "f1": 0.9920482129404872,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.7328605200945626,
+            "recall": 0.7425149700598802,
+            "f1": 0.7376561570493754,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.7222222222222222,
+            "recall": 0.7574525745257452,
+            "f1": 0.7394179894179894,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6336769759450172,
+            "recall": 0.5895140664961637,
+            "f1": 0.6107982775753561,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5926,
+            27,
+            8,
+            5
+          ],
+          [
+            20,
+            1240,
+            83,
+            327
+          ],
+          [
+            33,
+            124,
+            1118,
+            201
+          ],
+          [
+            2,
+            301,
+            339,
+            922
+          ]
+        ],
+        "binary_contact_f1": 0.98989898989899,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.98989898989899,
+          "paper_precision": 0.9914802981895634,
+          "paper_recall": 0.9883227176220807,
+          "binary_contact_f1": 0.98989898989899,
+          "accuracy": 0.9911015361558636,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9908042133422504,
+              "recall": 0.9932953402614817,
+              "f1": 0.9920482129404872,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9914802981895634,
+              "recall": 0.9883227176220807,
+              "f1": 0.98989898989899,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5926,
+              40
+            ],
+            [
+              55,
+              4655
+            ]
+          ]
+        },
+        "loss": 0.49443703221612384
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.68527284614136,
+        "paper_precision": 0.6903925574389861,
+        "paper_recall": 0.7024346257889991,
+        "macro_f1": 0.5543494128603179,
+        "macro_precision": 0.5699205647591306,
+        "macro_recall": 0.5656338030026383,
+        "weighted_f1": 0.68527284614136,
+        "weighted_precision": 0.6903925574389861,
+        "weighted_recall": 0.7024346257889991,
+        "accuracy": 0.7024346257889991,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8996763754045307,
+            "recall": 0.9832007073386384,
+            "f1": 0.9395859738065061,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.3790849673202614,
+            "recall": 0.39590443686006827,
+            "f1": 0.38731218697829717,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.542016806722689,
+            "recall": 0.279826464208243,
+            "f1": 0.36909871244635195,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.4589041095890411,
+            "recall": 0.6036036036036037,
+            "f1": 0.5214007782101168,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1112,
+            13,
+            4,
+            2
+          ],
+          [
+            16,
+            116,
+            59,
+            102
+          ],
+          [
+            91,
+            108,
+            129,
+            133
+          ],
+          [
+            17,
+            69,
+            46,
+            201
+          ]
+        ],
+        "binary_contact_f1": 0.930884485258579,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.930884485258579,
+          "paper_precision": 0.9806517311608961,
+          "paper_recall": 0.8859245630174793,
+          "binary_contact_f1": 0.930884485258579,
+          "accuracy": 0.9355275022542832,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8996763754045307,
+              "recall": 0.9832007073386384,
+              "f1": 0.9395859738065061,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9806517311608961,
+              "recall": 0.8859245630174793,
+              "f1": 0.930884485258579,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1112,
+              19
+            ],
+            [
+              124,
+              963
+            ]
+          ]
+        },
+        "loss": 0.9300531310472735
+      }
+    },
+    {
+      "epoch": 23,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8606269838793319,
+        "paper_precision": 0.8601234039830516,
+        "paper_recall": 0.86174597227426,
+        "macro_f1": 0.7691561251552949,
+        "macro_precision": 0.7694374646497895,
+        "macro_recall": 0.76994010389807,
+        "weighted_f1": 0.8606269838793319,
+        "weighted_precision": 0.8601234039830516,
+        "weighted_recall": 0.86174597227426,
+        "accuracy": 0.86174597227426,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9891485809682805,
+            "recall": 0.9931277237680187,
+            "f1": 0.9911341585814654,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.7334123222748815,
+            "recall": 0.7413173652694611,
+            "f1": 0.737343656938654,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.7147395171537484,
+            "recall": 0.7621951219512195,
+            "f1": 0.7377049180327869,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6404494382022472,
+            "recall": 0.5831202046035806,
+            "f1": 0.6104417670682731,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5925,
+            31,
+            9,
+            1
+          ],
+          [
+            23,
+            1238,
+            104,
+            305
+          ],
+          [
+            36,
+            109,
+            1125,
+            206
+          ],
+          [
+            6,
+            310,
+            336,
+            912
+          ]
+        ],
+        "binary_contact_f1": 0.9887186036611324,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9887186036611324,
+          "paper_precision": 0.9912505335040547,
+          "paper_recall": 0.9861995753715499,
+          "binary_contact_f1": 0.9887186036611324,
+          "accuracy": 0.9900711877107531,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9891485809682805,
+              "recall": 0.9931277237680187,
+              "f1": 0.9911341585814654,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9912505335040547,
+              "recall": 0.9861995753715499,
+              "f1": 0.9887186036611324,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5925,
+              41
+            ],
+            [
+              65,
+              4645
+            ]
+          ]
+        },
+        "loss": 0.5019234203437428
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6727548805447998,
+        "paper_precision": 0.6662815020880836,
+        "paper_recall": 0.6992786293958522,
+        "macro_f1": 0.548929637994922,
+        "macro_precision": 0.569065686058602,
+        "macro_recall": 0.5500039861004187,
+        "weighted_f1": 0.6727548805447998,
+        "weighted_precision": 0.6662815020880836,
+        "weighted_recall": 0.6992786293958522,
+        "accuracy": 0.6992786293958522,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8411985018726592,
+            "recall": 0.9929266136162688,
+            "f1": 0.910786699107867,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.42152466367713004,
+            "recall": 0.32081911262798635,
+            "f1": 0.3643410852713178,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.5109489051094891,
+            "recall": 0.3036876355748373,
+            "f1": 0.38095238095238093,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.5025906735751295,
+            "recall": 0.5825825825825826,
+            "f1": 0.5396383866481224,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1123,
+            1,
+            6,
+            1
+          ],
+          [
+            43,
+            94,
+            67,
+            89
+          ],
+          [
+            140,
+            79,
+            140,
+            102
+          ],
+          [
+            29,
+            49,
+            61,
+            194
+          ]
+        ],
+        "binary_contact_f1": 0.8883248730964467,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.8883248730964467,
+          "paper_precision": 0.9909399773499433,
+          "paper_recall": 0.8049678012879485,
+          "binary_contact_f1": 0.8883248730964467,
+          "accuracy": 0.9008115419296664,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8411985018726592,
+              "recall": 0.9929266136162688,
+              "f1": 0.910786699107867,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9909399773499433,
+              "recall": 0.8049678012879485,
+              "f1": 0.8883248730964467,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1123,
+              8
+            ],
+            [
+              212,
+              875
+            ]
+          ]
+        },
+        "loss": 0.9567089583468602
+      }
+    },
+    {
+      "epoch": 24,
+      "train": {
+        "paper_average": "weighted",
+        "paper_f1": 0.8625466611663293,
+        "paper_precision": 0.8621227598401041,
+        "paper_recall": 0.8639940052454103,
+        "macro_f1": 0.7723760500250161,
+        "macro_precision": 0.7728323623320317,
+        "macro_recall": 0.7736752546640531,
+        "weighted_f1": 0.8625466611663293,
+        "weighted_precision": 0.8621227598401041,
+        "weighted_recall": 0.8639940052454103,
+        "accuracy": 0.8639940052454103,
+        "per_class": {
+          "ambient": {
+            "precision": 0.9894789579158316,
+            "recall": 0.9931277237680187,
+            "f1": 0.9912999832691985,
+            "support": 5966
+          },
+          "leaf": {
+            "precision": 0.7283737024221453,
+            "recall": 0.7562874251497006,
+            "f1": 0.7420681551116334,
+            "support": 1670
+          },
+          "trunk": {
+            "precision": 0.7239847715736041,
+            "recall": 0.7730352303523035,
+            "f1": 0.7477064220183486,
+            "support": 1476
+          },
+          "twig": {
+            "precision": 0.6494920174165457,
+            "recall": 0.5722506393861893,
+            "f1": 0.6084296397008837,
+            "support": 1564
+          }
+        },
+        "confusion_matrix": [
+          [
+            5925,
+            33,
+            4,
+            4
+          ],
+          [
+            24,
+            1263,
+            88,
+            295
+          ],
+          [
+            35,
+            116,
+            1141,
+            184
+          ],
+          [
+            4,
+            322,
+            343,
+            895
+          ]
+        ],
+        "binary_contact_f1": 0.9889338157054692,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.9889338157054692,
+          "paper_precision": 0.9912542662116041,
+          "paper_recall": 0.986624203821656,
+          "binary_contact_f1": 0.9889338157054692,
+          "accuracy": 0.9902585237916823,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.9894789579158316,
+              "recall": 0.9931277237680187,
+              "f1": 0.9912999832691985,
+              "support": 5966
+            },
+            "contact": {
+              "precision": 0.9912542662116041,
+              "recall": 0.986624203821656,
+              "f1": 0.9889338157054692,
+              "support": 4710
+            }
+          },
+          "confusion_matrix": [
+            [
+              5925,
+              41
+            ],
+            [
+              63,
+              4647
+            ]
+          ]
+        },
+        "loss": 0.4929456460592712
+      },
+      "val": {
+        "paper_average": "weighted",
+        "paper_f1": 0.6700445424882304,
+        "paper_precision": 0.6628120011903221,
+        "paper_recall": 0.6961226330027052,
+        "macro_f1": 0.5455091531720816,
+        "macro_precision": 0.5601598177743746,
+        "macro_recall": 0.549443083885762,
+        "weighted_f1": 0.6700445424882304,
+        "weighted_precision": 0.6628120011903221,
+        "weighted_recall": 0.6961226330027052,
+        "accuracy": 0.6961226330027052,
+        "per_class": {
+          "ambient": {
+            "precision": 0.8527190332326284,
+            "recall": 0.9982316534040672,
+            "f1": 0.9197556008146639,
+            "support": 1131
+          },
+          "leaf": {
+            "precision": 0.391025641025641,
+            "recall": 0.41638225255972694,
+            "f1": 0.4033057851239669,
+            "support": 293
+          },
+          "trunk": {
+            "precision": 0.46215139442231074,
+            "recall": 0.25162689804772237,
+            "f1": 0.3258426966292135,
+            "support": 461
+          },
+          "twig": {
+            "precision": 0.5347432024169184,
+            "recall": 0.5315315315315315,
+            "f1": 0.5331325301204819,
+            "support": 333
+          }
+        },
+        "confusion_matrix": [
+          [
+            1129,
+            2,
+            0,
+            0
+          ],
+          [
+            40,
+            122,
+            70,
+            61
+          ],
+          [
+            124,
+            128,
+            116,
+            93
+          ],
+          [
+            31,
+            60,
+            65,
+            177
+          ]
+        ],
+        "binary_contact_f1": 0.900555275113579,
+        "binary_contact": {
+          "paper_average": "binary",
+          "paper_f1": 0.900555275113579,
+          "paper_precision": 0.9977628635346756,
+          "paper_recall": 0.8206071757129715,
+          "binary_contact_f1": 0.900555275113579,
+          "accuracy": 0.9111812443642922,
+          "per_class": {
+            "non_contact": {
+              "precision": 0.8527190332326284,
+              "recall": 0.9982316534040672,
+              "f1": 0.9197556008146639,
+              "support": 1131
+            },
+            "contact": {
+              "precision": 0.9977628635346756,
+              "recall": 0.8206071757129715,
+              "f1": 0.900555275113579,
+              "support": 1087
+            }
+          },
+          "confusion_matrix": [
+            [
+              1129,
+              2
+            ],
+            [
+              195,
+              892
+            ]
+          ]
+        },
+        "loss": 1.00031276544425
+      }
+    }
+  ]
+}

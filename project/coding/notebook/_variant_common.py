@@ -94,6 +94,7 @@ def make_context(
     batch_size: int = 4,
     lr: float = 1e-4,
     num_workers: int = 2,
+    seed: int = 42,
     split_strategy: str = "domain",
     freeze_pretrained: bool = True,
     class_weights: bool = True,
@@ -112,6 +113,7 @@ def make_context(
         lr=lr,
         num_workers=num_workers,
         class_weights=class_weights,
+        seed=seed,
     )
     model_cfg = ModelConfig(freeze_pretrained=freeze_pretrained, ast_input_source=ast_input_source)
     set_seed(train_cfg.seed)
@@ -369,6 +371,113 @@ def train_fusion_variant(
     }
     result_path = ctx.output_dir / f"fusion_{kind}_results.json"
     result_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    return result
+
+
+def build_pretrained_baseline_model(kind: str, ctx: ExperimentContext):
+    cfg = ctx.model_cfg
+    if kind == "audio":
+        return ASTCLAPAudioNet(
+            num_classes=len(LABELS),
+            sample_rate=ctx.data_cfg.target_sample_rate,
+            ast_model_name=cfg.ast_model_name,
+            clap_model_name=cfg.clap_model_name,
+            fusion_dim=cfg.fusion_dim,
+            fusion_heads=cfg.fusion_heads,
+            fusion_layers=cfg.fusion_layers,
+            fusion_dropout=cfg.fusion_dropout,
+            freeze_pretrained=cfg.freeze_pretrained,
+            ast_input_source=cfg.ast_input_source,
+        )
+    if kind == "video":
+        return ViTImageNet(
+            num_classes=len(LABELS),
+            fusion_dim=cfg.fusion_dim,
+            fusion_dropout=cfg.fusion_dropout,
+            freeze_pretrained=cfg.freeze_pretrained,
+        )
+    if kind in ("early", "middle", "late"):
+        return build_fusion_model(kind, ctx)
+    raise ValueError(f"Unknown pretrained baseline kind: {kind}")
+
+
+def train_pretrained_baseline_variant(
+    kind: str,
+    ctx: ExperimentContext,
+    early_stopping_patience: int = 10,
+    min_delta: float = 1e-4,
+) -> dict:
+    train_loader, val_loader = make_av_loaders(ctx)
+    model = build_pretrained_baseline_model(kind, ctx).to(ctx.device)
+    criterion = nn.CrossEntropyLoss(
+        weight=make_class_weight_tensor(ctx.train_df, ctx) if ctx.train_cfg.class_weights else None
+    )
+    optimizer = torch.optim.AdamW(
+        [param for param in model.parameters() if param.requires_grad],
+        lr=ctx.train_cfg.lr,
+        weight_decay=ctx.train_cfg.weight_decay,
+    )
+    best_f1 = -1.0
+    best_metrics = None
+    best_epoch = 0
+    epochs_without_improvement = 0
+    history = []
+    mode = f"pretrained_{kind}" if kind in ("audio", "video") else f"fusion_{kind}"
+
+    for epoch in range(1, ctx.train_cfg.epochs + 1):
+        train_metrics = run_epoch(model, train_loader, criterion, ctx, optimizer)
+        val_metrics = run_epoch(model, val_loader, criterion, ctx)
+        history.append({"epoch": epoch, "train": train_metrics, "val": val_metrics})
+        print(
+            f"{mode} epoch={epoch} "
+            f"train_f1={train_metrics['paper_f1']:.4f} "
+            f"val_f1={val_metrics['paper_f1']:.4f} "
+            f"val_macro_f1={val_metrics['macro_f1']:.4f}"
+        )
+        if val_metrics["paper_f1"] > best_f1 + min_delta:
+            best_f1 = val_metrics["paper_f1"]
+            best_metrics = val_metrics
+            best_epoch = epoch
+            epochs_without_improvement = 0
+            torch.save(
+                {
+                    "mode": mode,
+                    "model": model.state_dict(),
+                    "labels": LABELS,
+                    "paper_average": PAPER_AVERAGE,
+                    "data_config": ctx.data_cfg.__dict__,
+                    "model_config": ctx.model_cfg.__dict__,
+                    "best_val_metrics": val_metrics,
+                },
+                ctx.output_dir / f"best_{mode}_model.pt",
+            )
+        else:
+            epochs_without_improvement += 1
+            if early_stopping_patience and epochs_without_improvement >= early_stopping_patience:
+                print(
+                    f"{mode} early stopping at epoch={epoch}; "
+                    f"best_epoch={best_epoch} best_val_f1={best_f1:.4f}"
+                )
+                break
+
+    result = {
+        "group": "pretrained",
+        "mode": mode,
+        "fusion": kind if kind in ("early", "middle", "late") else "none",
+        "encoder": "AST+CLAP" if kind == "audio" else "ViT" if kind == "video" else "AST+CLAP+ViT",
+        "classifier": "mlp_head",
+        "pretrained": True,
+        "frozen": ctx.model_cfg.freeze_pretrained,
+        "paper_average": PAPER_AVERAGE,
+        "best_paper_f1": best_f1,
+        "best_epoch": best_epoch,
+        "early_stopping_patience": early_stopping_patience,
+        "min_delta": min_delta,
+        "best_val_metrics": best_metrics,
+        "weight_file": str(ctx.output_dir / f"best_{mode}_model.pt"),
+        "history": history,
+    }
+    (ctx.output_dir / f"{mode}_results.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
     return result
 
 
@@ -1053,3 +1162,501 @@ def train_audio_psla_efficientnet(
         encoding="utf-8",
     )
     return result
+
+
+def flatten_metrics(metrics: dict | None) -> dict:
+    metrics = metrics or {}
+    row = {
+        "paper_f1": metrics.get("paper_f1"),
+        "paper_precision": metrics.get("paper_precision"),
+        "paper_recall": metrics.get("paper_recall"),
+        "macro_f1": metrics.get("macro_f1"),
+        "macro_precision": metrics.get("macro_precision"),
+        "macro_recall": metrics.get("macro_recall"),
+        "weighted_f1": metrics.get("weighted_f1"),
+        "weighted_precision": metrics.get("weighted_precision"),
+        "weighted_recall": metrics.get("weighted_recall"),
+        "accuracy": metrics.get("accuracy"),
+        "binary_contact_f1": metrics.get("binary_contact_f1"),
+    }
+    for label, values in metrics.get("per_class", {}).items():
+        if isinstance(values, dict):
+            row[f"{label}_precision"] = values.get("precision")
+            row[f"{label}_recall"] = values.get("recall")
+            row[f"{label}_f1"] = values.get("f1")
+            row[f"{label}_support"] = values.get("support")
+    return row
+
+
+def experiment_result_row(result: dict, **overrides) -> dict:
+    metrics = result.get("best_val_metrics", result)
+    row = {
+        "group": result.get("group"),
+        "mode": result.get("mode"),
+        "input": result.get("input"),
+        "feature": result.get("feature"),
+        "encoder": result.get("encoder"),
+        "fusion": result.get("fusion", "none"),
+        "classifier": result.get("classifier", result.get("model_kind", result.get("model"))),
+        "pretrained": result.get("pretrained", False),
+        "frozen": result.get("frozen", False),
+        "best_epoch": result.get("best_epoch"),
+        "weight_file": result.get("weight_file"),
+    }
+    row.update(flatten_metrics(metrics))
+    row.update({k: v for k, v in overrides.items() if v is not None})
+    return row
+
+
+def save_experiment_table(rows: list[dict], ctx: ExperimentContext, filename: str) -> pd.DataFrame:
+    table = pd.DataFrame(rows)
+    if not table.empty:
+        sort_col = "macro_f1" if "macro_f1" in table.columns else "paper_f1"
+        table = table.sort_values(sort_col, ascending=False, na_position="last").reset_index(drop=True)
+    table.to_csv(ctx.output_dir / filename, index=False)
+    return table
+
+
+def run_pretrained_matrix(
+    ctx: ExperimentContext,
+    baselines: tuple[str, ...] = ("audio", "video"),
+    fusion_kinds: tuple[str, ...] = ("early", "middle", "late"),
+    early_stopping_patience: int = 10,
+    min_delta: float = 1e-4,
+) -> pd.DataFrame:
+    rows = []
+    for kind in [*baselines, *fusion_kinds]:
+        result = train_pretrained_baseline_variant(
+            kind,
+            ctx,
+            early_stopping_patience=early_stopping_patience,
+            min_delta=min_delta,
+        )
+        rows.append(experiment_result_row(result))
+    return save_experiment_table(rows, ctx, "pretrained_fusion_matrix_results.csv")
+
+
+def run_single_pretrained_variant(
+    kind: str,
+    ctx: ExperimentContext,
+    early_stopping_patience: int = 10,
+    min_delta: float = 1e-4,
+) -> pd.DataFrame:
+    result = train_pretrained_baseline_variant(
+        kind,
+        ctx,
+        early_stopping_patience=early_stopping_patience,
+        min_delta=min_delta,
+    )
+    mode = result["mode"]
+    return save_experiment_table([experiment_result_row(result)], ctx, f"{mode}_single_result.csv")
+
+
+def _make_pretrained_embedding_model(ctx: ExperimentContext) -> PaperLikeFusionNet:
+    cfg = ctx.model_cfg
+    model = PaperLikeFusionNet(
+        num_classes=len(LABELS),
+        sample_rate=ctx.data_cfg.target_sample_rate,
+        ast_model_name=cfg.ast_model_name,
+        clap_model_name=cfg.clap_model_name,
+        fusion_dim=cfg.fusion_dim,
+        fusion_heads=cfg.fusion_heads,
+        fusion_layers=cfg.fusion_layers,
+        fusion_dropout=cfg.fusion_dropout,
+        freeze_pretrained=True,
+        ast_input_source=cfg.ast_input_source,
+    )
+    return model.to(ctx.device).eval()
+
+
+def extract_pretrained_embeddings(
+    frame: pd.DataFrame,
+    ctx: ExperimentContext,
+    embedding_kind: str = "fusion",
+    batch_size: int | None = None,
+    model: PaperLikeFusionNet | None = None,
+) -> tuple[np.ndarray, np.ndarray]:
+    if embedding_kind not in ("audio", "video", "fusion"):
+        raise ValueError(f"Unknown pretrained embedding kind: {embedding_kind}")
+
+    dataset = AudioVisualDataset(frame, ctx.data_cfg, train=False)
+    loader = DataLoader(
+        dataset,
+        batch_size=batch_size or ctx.train_cfg.batch_size,
+        shuffle=False,
+        num_workers=ctx.train_cfg.num_workers,
+        pin_memory=True,
+    )
+    model = model or _make_pretrained_embedding_model(ctx)
+    features = []
+    labels = []
+
+    with torch.no_grad():
+        for batch in tqdm(loader, leave=False):
+            waveform = batch["waveform"].to(ctx.device)
+            audio = batch["audio"].to(ctx.device)
+            image = batch["image"].to(ctx.device)
+
+            parts = []
+            if embedding_kind in ("audio", "fusion"):
+                ast_emb = model.encode_ast_mel(audio) if model.ast_input_source == "mel" else model.encode_ast(waveform)
+                clap_emb = model.encode_clap(waveform)
+                parts.extend([ast_emb, clap_emb])
+            if embedding_kind in ("video", "fusion"):
+                parts.append(model.image_model(image))
+
+            features.append(torch.cat(parts, dim=1).detach().cpu().numpy())
+            labels.append(batch["label"].numpy())
+
+    return np.concatenate(features, axis=0), np.concatenate(labels, axis=0)
+
+
+def extract_pretrained_embedding_split(
+    ctx: ExperimentContext,
+    embedding_kind: str = "fusion",
+    max_samples: int = 0,
+    use_cache: bool = True,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    train_part = sample_stratified_frame(ctx.train_df, max_samples, ctx.train_cfg.seed)
+    val_part = sample_stratified_frame(ctx.val_df, max_samples, ctx.train_cfg.seed + 1)
+    cache_tag = "full" if not max_samples else f"sample{max_samples}"
+    cache_path = ctx.output_dir / f"pretrained_embedding_{embedding_kind}_{cache_tag}.npz"
+    if use_cache and cache_path.exists():
+        cached = np.load(cache_path)
+        return cached["x_train"], cached["y_train"], cached["x_val"], cached["y_val"]
+
+    model = _make_pretrained_embedding_model(ctx)
+    x_train, y_train = extract_pretrained_embeddings(train_part, ctx, embedding_kind, model=model)
+    x_val, y_val = extract_pretrained_embeddings(val_part, ctx, embedding_kind, model=model)
+    if use_cache:
+        np.savez_compressed(
+            cache_path,
+            x_train=x_train,
+            y_train=y_train,
+            x_val=x_val,
+            y_val=y_val,
+        )
+    return x_train, y_train, x_val, y_val
+
+
+def build_sklearn_classifier(classifier_name: str, ctx: ExperimentContext):
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.pipeline import make_pipeline
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.svm import LinearSVC
+
+    if classifier_name == "logreg":
+        return make_pipeline(
+            StandardScaler(),
+            LogisticRegression(
+                max_iter=2000,
+                class_weight="balanced",
+                random_state=ctx.train_cfg.seed,
+            ),
+        )
+    if classifier_name == "linear_svm":
+        return make_pipeline(
+            StandardScaler(),
+            LinearSVC(
+                class_weight="balanced",
+                max_iter=8000,
+                random_state=ctx.train_cfg.seed,
+            ),
+        )
+    if classifier_name == "random_forest":
+        return RandomForestClassifier(
+            n_estimators=400,
+            random_state=ctx.train_cfg.seed,
+            class_weight="balanced_subsample",
+            n_jobs=-1,
+        )
+    if classifier_name == "xgboost":
+        try:
+            from xgboost import XGBClassifier
+        except Exception as exc:
+            raise RuntimeError("xgboost is not installed in this environment") from exc
+        return XGBClassifier(
+            n_estimators=400,
+            max_depth=4,
+            learning_rate=0.05,
+            subsample=0.9,
+            colsample_bytree=0.9,
+            objective="multi:softmax",
+            num_class=len(LABELS),
+            eval_metric="mlogloss",
+            random_state=ctx.train_cfg.seed,
+            n_jobs=-1,
+        )
+    raise ValueError(f"Unknown sklearn classifier: {classifier_name}")
+
+
+def run_pretrained_embedding_ml_classifier(
+    classifier_name: str,
+    ctx: ExperimentContext,
+    embedding_kind: str = "fusion",
+    max_samples: int = 0,
+    use_cache: bool = True,
+) -> dict:
+    x_train, y_train, x_val, y_val = extract_pretrained_embedding_split(
+        ctx,
+        embedding_kind,
+        max_samples,
+        use_cache=use_cache,
+    )
+    model = build_sklearn_classifier(classifier_name, ctx)
+    model.fit(x_train, y_train)
+    pred = model.predict(x_val)
+    metrics = paper_classification_metrics(y_val, pred, LABELS, PAPER_AVERAGE)
+    metrics["binary_contact_f1"] = binary_contact_metrics(y_val, pred)["binary_contact_f1"]
+    result = {
+        "group": "pretrained_embedding_ml",
+        "mode": f"pretrained_embedding_{embedding_kind}_{classifier_name}",
+        "input": f"{embedding_kind}_embedding",
+        "feature": f"{embedding_kind}_embedding",
+        "encoder": "AST+CLAP+ViT" if embedding_kind == "fusion" else "AST+CLAP" if embedding_kind == "audio" else "ViT",
+        "fusion": embedding_kind if embedding_kind == "fusion" else "none",
+        "classifier": classifier_name,
+        "pretrained": True,
+        "frozen": True,
+        "best_val_metrics": metrics,
+    }
+    (ctx.output_dir / f"pretrained_embedding_{embedding_kind}_{classifier_name}_results.json").write_text(
+        json.dumps(result, indent=2),
+        encoding="utf-8",
+    )
+    return result
+
+
+def run_pretrained_embedding_ml_matrix(
+    classifier_name: str,
+    ctx: ExperimentContext,
+    embedding_kinds: tuple[str, ...] = ("audio", "video", "fusion"),
+    max_samples: int = 0,
+    use_cache: bool = True,
+) -> pd.DataFrame:
+    rows = []
+    for embedding_kind in embedding_kinds:
+        print(f"running pretrained embedding={embedding_kind} classifier={classifier_name}")
+        result = run_pretrained_embedding_ml_classifier(
+            classifier_name,
+            ctx,
+            embedding_kind=embedding_kind,
+            max_samples=max_samples,
+            use_cache=use_cache,
+        )
+        rows.append(experiment_result_row(result))
+    return save_experiment_table(rows, ctx, f"pretrained_embedding_{classifier_name}_results.csv")
+
+
+def run_audio_sklearn_feature_classifier(
+    feature_name: str,
+    classifier_name: str,
+    ctx: ExperimentContext,
+    max_samples: int = 0,
+) -> dict:
+    from sklearn.ensemble import RandomForestClassifier
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.pipeline import make_pipeline
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.svm import LinearSVC
+
+    train_part, val_part = audio_frames(ctx, max_samples)
+    x_train = build_audio_feature_matrix(train_part, feature_name, ctx.data_cfg.train_crop, ctx)
+    x_val = build_audio_feature_matrix(val_part, feature_name, ctx.data_cfg.eval_crop, ctx)
+    y_train = train_part["label_id"].to_numpy()
+    y_val = val_part["label_id"].to_numpy()
+
+    if classifier_name == "logreg":
+        model = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000, class_weight="balanced"))
+    elif classifier_name == "linear_svm":
+        model = make_pipeline(StandardScaler(), LinearSVC(class_weight="balanced", max_iter=5000))
+    elif classifier_name == "random_forest":
+        model = RandomForestClassifier(
+            n_estimators=250,
+            random_state=ctx.train_cfg.seed,
+            class_weight="balanced_subsample",
+            n_jobs=-1,
+        )
+    elif classifier_name == "xgboost":
+        try:
+            from xgboost import XGBClassifier
+        except Exception as exc:
+            raise RuntimeError("xgboost is not installed in this environment") from exc
+        model = XGBClassifier(
+            n_estimators=300,
+            max_depth=4,
+            learning_rate=0.05,
+            subsample=0.9,
+            colsample_bytree=0.9,
+            objective="multi:softmax",
+            num_class=len(LABELS),
+            eval_metric="mlogloss",
+            random_state=ctx.train_cfg.seed,
+            n_jobs=-1,
+        )
+    else:
+        raise ValueError(f"Unknown sklearn classifier: {classifier_name}")
+
+    model.fit(x_train, y_train)
+    pred = model.predict(x_val)
+    metrics = paper_classification_metrics(y_val, pred, LABELS, PAPER_AVERAGE)
+    metrics["binary_contact_f1"] = binary_contact_metrics(y_val, pred)["binary_contact_f1"]
+    return {
+        "group": "handcrafted",
+        "mode": f"audio_ml_{classifier_name}_{feature_name}",
+        "input": feature_name,
+        "feature": feature_name,
+        "encoder": "handcrafted",
+        "fusion": "none",
+        "classifier": classifier_name,
+        "pretrained": False,
+        "frozen": False,
+        "best_val_metrics": metrics,
+    }
+
+
+def run_handcrafted_audio_ml_matrix(
+    ctx: ExperimentContext,
+    features: tuple[str, ...] = ("mfcc", "fft", "mfcc_fft", "stft"),
+    classifiers: tuple[str, ...] = ("logreg", "linear_svm", "random_forest", "xgboost", "mlp"),
+    max_samples: int = 0,
+    mlp_epochs: int | None = None,
+    early_stopping_patience: int = 10,
+) -> pd.DataFrame:
+    rows = []
+    for feature_name in features:
+        for classifier_name in classifiers:
+            print(f"running handcrafted feature={feature_name} classifier={classifier_name}")
+            try:
+                if classifier_name == "mlp":
+                    result = train_audio_deep_feature(
+                        feature_name,
+                        ctx,
+                        epochs=mlp_epochs,
+                        max_samples=max_samples,
+                        model_kind="mlp",
+                        early_stopping_patience=early_stopping_patience,
+                    )
+                    result.update(
+                        {
+                            "group": "handcrafted",
+                            "input": feature_name,
+                            "encoder": "handcrafted",
+                            "fusion": "none",
+                            "classifier": "mlp",
+                            "pretrained": False,
+                            "frozen": False,
+                        }
+                    )
+                else:
+                    result = run_audio_sklearn_feature_classifier(
+                        feature_name,
+                        classifier_name,
+                        ctx,
+                        max_samples=max_samples,
+                    )
+                rows.append(experiment_result_row(result))
+            except RuntimeError as exc:
+                if classifier_name != "xgboost":
+                    raise
+                rows.append(
+                    {
+                        "group": "handcrafted",
+                        "mode": f"audio_ml_xgboost_{feature_name}",
+                        "input": feature_name,
+                        "feature": feature_name,
+                        "encoder": "handcrafted",
+                        "fusion": "none",
+                        "classifier": "xgboost",
+                        "pretrained": False,
+                        "frozen": False,
+                        "status": f"skipped: {exc}",
+                    }
+                )
+    return save_experiment_table(rows, ctx, "handcrafted_audio_ml_matrix_results.csv")
+
+
+def run_audio_deep_matrix(
+    ctx: ExperimentContext,
+    cases: tuple[tuple[str, str], ...] = (
+        ("psla_logmel", "cnn"),
+        ("psla_logmel", "transformer"),
+        ("stft", "cnn"),
+        ("stft", "transformer"),
+        ("mfcc", "cnn"),
+        ("mfcc", "crnn"),
+    ),
+    include_psla_efficientnet: bool = True,
+    epochs: int | None = None,
+    max_samples: int = 0,
+    early_stopping_patience: int = 10,
+) -> pd.DataFrame:
+    rows = []
+    for feature_name, model_kind in cases:
+        print(f"running deep audio feature={feature_name} model={model_kind}")
+        result = train_audio_deep_feature(
+            feature_name,
+            ctx,
+            epochs=epochs,
+            max_samples=max_samples,
+            model_kind=model_kind,
+            early_stopping_patience=early_stopping_patience,
+        )
+        result.update(
+            {
+                "group": "deep_audio",
+                "input": f"{feature_name}_map",
+                "encoder": model_kind,
+                "fusion": "none",
+                "classifier": "mlp_head",
+                "pretrained": False,
+                "frozen": False,
+            }
+        )
+        rows.append(experiment_result_row(result))
+
+    if include_psla_efficientnet:
+        result = train_audio_psla_efficientnet(
+            ctx,
+            epochs=epochs,
+            max_samples=max_samples,
+            early_stopping_patience=early_stopping_patience,
+        )
+        result.update(
+            {
+                "group": "deep_audio",
+                "input": "psla_logmel_map",
+                "encoder": "efficientnet_b0_psla",
+                "fusion": "none",
+                "classifier": "mlp_head",
+                "pretrained": "imagenet_optional",
+                "frozen": False,
+            }
+        )
+        rows.append(experiment_result_row(result))
+
+    return save_experiment_table(rows, ctx, "deep_audio_matrix_results.csv")
+
+
+def collect_variant_results(
+    ctx: ExperimentContext,
+    filenames: tuple[str, ...] = (
+        "pretrained_fusion_matrix_results.csv",
+        "handcrafted_audio_ml_matrix_results.csv",
+        "deep_audio_matrix_results.csv",
+    ),
+    output_name: str = "all_experiment_results.csv",
+) -> pd.DataFrame:
+    frames = []
+    for filename in filenames:
+        path = ctx.output_dir / filename
+        if path.exists():
+            frames.append(pd.read_csv(path))
+    if not frames:
+        return pd.DataFrame()
+    table = pd.concat(frames, ignore_index=True, sort=False)
+    sort_col = "macro_f1" if "macro_f1" in table.columns else "paper_f1"
+    table = table.sort_values(sort_col, ascending=False, na_position="last").reset_index(drop=True)
+    table.to_csv(ctx.output_dir / output_name, index=False)
+    return table

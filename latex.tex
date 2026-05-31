@@ -1,0 +1,363 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{pdflscape}
+
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\setlength{\headheight}{14.5pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\hypersetup{colorlinks=false,pdfborder={0 0 0}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Survey and Method Selection}
+\fancyhead[R]{\small Audio-Visual Contact Understanding}
+\fancyfoot[C]{\small\thepage}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\Large\bfseries Survey and Method Selection for\\Generalizable Audio-Visual Contact Understanding\par}
+\vspace{1.2cm}
+{\large Related-Work Survey Report}\par
+\vspace{1.5cm}
+\begin{tabular}{rl}
+\textbf{Course:} & DPL302m \\
+\textbf{Semester:} & 5, Academic Year 2025--2026 \\
+\textbf{Instructor:} & Phan Thi Thu Hong \\
+\textbf{Group:} & 3 \\
+\end{tabular}
+\vspace{1.2cm}
+\vfill
+{\today}
+\end{titlepage}
+
+\section{Introduction and Survey Objective}
+
+Robots that manipulate objects in unstructured environments must often make decisions under occlusion, clutter, and uncertain physical contact. In agriculture, household manipulation, and mobile robotics, vision can describe the scene before interaction, but it may fail once the actual contact point is hidden. Contact-induced sound and vibration can provide complementary information after physical interaction begins.
+
+The reference task for this report is audio-visual contact classification for tree structures. The key problem is to identify whether a robot or probe is contacting \textit{ambient/no contact}, \textit{leaf}, \textit{twig}, or \textit{trunk}. The reference paper by Spears et al.~\cite{spears2025tree} shows that contact microphone audio and RGB images can be fused to improve material-level contact classification in cluttered orchard settings.
+
+This report changes the earlier proposal into a focused related-work survey. The objective is to compare twenty-one related studies, group them by methodological similarity, analyze the strengths and limitations of each group, and select the most suitable implementation method for our current project. After adding recent robustness papers, the selected direction is centered on \textbf{audio data processing and augmentation}, with audio-visual fusion kept as a complementary stage.
+
+\section{Reference Task and Dataset Context}
+
+The available project data contains two related domains:
+
+\begin{itemize}[leftmargin=1.5em]
+\item a no-robot or hand-held domain, stored as \texttt{audio\_visual\_dataset\_default};
+\item a robot-mounted domain, stored as \texttt{audio\_visual\_dataset\_robo\_default}.
+\end{itemize}
+
+Both domains include paired WAV audio segments, image frames, and class labels. The four labels are \textit{ambient}, \textit{leaf}, \textit{twig}, and \textit{trunk}. Initial waveform visualization shows a strong difference between no-robot and robot audio, especially in the \textit{ambient} class. The robot domain contains more structure-borne vibration and background motor noise. Therefore, the final method should not only classify contact classes, but also handle domain shift between the hand-held and robot-mounted data.
+
+The selected implementation must satisfy four practical requirements:
+
+\begin{enumerate}[leftmargin=1.5em]
+\item use the available paired audio-image dataset without changing the original files;
+\item support strong audio baselines because contact vibration carries class-specific cues;
+\item use image features as complementary semantic context rather than the only signal;
+\item explicitly address noise and domain shift between no-robot and robot domains.
+\end{enumerate}
+
+\section{Survey Methodology}
+
+The surveyed studies were selected based on relevance to four technical questions:
+
+\begin{enumerate}[leftmargin=1.5em]
+\item How can contact audio, vibration, or acoustic tactile sensing support robot perception?
+\item Which audio representations and pretrained encoders are useful for low-data audio classification?
+\item How should audio and vision be fused for event or contact understanding?
+\item Which robustness and domain-adaptation methods are feasible for a small project with a visible source-target shift?
+\end{enumerate}
+
+The papers are grouped into four method families:
+
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Group A: Contact and audio tactile sensing for robotics.}
+\item \textbf{Group B: Audio representation and pretrained audio models.}
+\item \textbf{Group C: Audio-visual fusion and event understanding.}
+\item \textbf{Group D: Audio robustness, data augmentation, and domain adaptation.}
+\end{itemize}
+
+\section{Taxonomy of Related Studies}
+
+\subsection{Group A: Contact and Audio Tactile Sensing for Robotics}
+
+This group is closest to the physical sensing problem. Lee et al.~\cite{lee2022contact} first studied audio-based contact classification in cluttered tree canopies and found that MFCC features were useful for distinguishing leaf, twig, and trunk contacts. Spears et al.~\cite{spears2025tree} extended this direction with an audio-visual dataset, a robot-mounted evaluation domain, and multimodal fusion. Mejia et al.~\cite{mejia2024hearing} showed that contact microphones can be treated as an audio-based tactile modality and benefit from audio-visual pretraining. Other tactile studies, such as multimodal material identification~\cite{gomez2018material} and acoustic wheel sensing~\cite{mason2024wheel}, show that vibration and acoustic response can reveal material, terrain, and contact state. RH20T~\cite{fang2023rh20t} further shows the value of large-scale contact-rich robotic datasets with synchronized visual, force, audio, and action information.
+
+\textbf{Strengths.} These studies are physically aligned with our task. They focus on contact, material, vibration, and robot perception rather than generic sound events.
+
+\textbf{Limitations.} Many systems use task-specific hardware, object sets, or interaction policies. Results may not directly transfer to the released tree-contact dataset without careful preprocessing.
+
+\subsection{Group B: Audio Representation and Pretrained Audio Models}
+
+Classical audio features such as FFT, MFCC, Mel spectrograms, and CQT are lightweight and interpretable. They are useful for baselines and fast experiments. Large audio datasets such as AudioSet~\cite{gemmeke2017audioset}, FSD50K~\cite{fonseca2020fsd50k}, and ESC-50~\cite{piczak2015esc50} support broader sound-event learning and benchmarking. Pretrained models such as AST~\cite{gong2021ast} and CLAP~\cite{elizalde2022clap} provide stronger representations when labeled data is limited. SpecAugment~\cite{park2019specaugment} gives a simple way to improve robustness by masking time and frequency regions in spectrogram-like features.
+
+\textbf{Strengths.} Audio representations are directly applicable to WAV segments. Classical features are easy to implement; pretrained encoders improve generalization under limited data.
+
+\textbf{Limitations.} Generic audio pretraining is not contact-specific. Large encoders require more memory and may learn background or domain artifacts if the evaluation protocol is not careful.
+
+\subsection{Group C: Audio-Visual Fusion and Event Understanding}
+
+Audio-visual datasets and methods show that sound and images can provide complementary evidence. VGGSound~\cite{chen2020vggsound} focuses on large-scale audio-visual correspondence for sound recognition. AVE~\cite{tian2018ave} studies audio-visual event localization and demonstrates the value of temporal alignment and cross-modal attention. UnAV-100~\cite{geng2023unav} extends this idea to dense localization in untrimmed videos. In the contact-classification setting, Spears et al.~\cite{spears2025tree} use audio and vision together because audio is effective for detecting contact while images add semantic context.
+
+\textbf{Strengths.} Fusion can combine audio's contact sensitivity with visual scene semantics. Late fusion and embedding fusion are practical and easy to evaluate.
+
+\textbf{Limitations.} General audio-visual event datasets are not tactile datasets. They often contain visible sound sources and natural videos, while contact audio may arise from hidden physical interaction.
+
+\subsection{Group D: Audio Robustness, Data Augmentation, and Domain Adaptation}
+
+Domain shift is central to our project because no-robot and robot-mounted audio have visibly different waveform patterns. For speech and audio robustness, Eickhoff et al.~\cite{eickhoff2023bring} show that denoising capabilities from a pretrained Conformer ASR model can be distilled into a Cleancoder frontend that predicts denoised spectrograms and improves downstream ASR under noisy conditions. Oglic et al.~\cite{oglic2022waveform} frame audio augmentation as vicinal risk minimization and show that waveform-based models can improve out-of-distribution robustness under unseen noise. Emmanouilidou et al.~\cite{emmanouilidou2024domain} analyze cross-dataset speech emotion recognition and show that augmentation can improve unseen-dataset performance, while also warning that some domain mismatch goes beyond acoustic conditions. Deep CORAL~\cite{sun2016deepcoral} aligns second-order feature statistics between source and target domains. DANN~\cite{ganin2016dann} learns domain-invariant features with adversarial training and a gradient reversal layer. MixStyle~\cite{zhou2021mixstyle} improves domain generalization by mixing feature statistics to synthesize new styles. For our audio setting, these studies motivate target-domain noise augmentation, domain-aware noise profiles, spectrogram masking, and lightweight feature alignment.
+
+\textbf{Strengths.} These methods directly target the gap between training and deployment domains. Audio augmentation and denoising are especially practical because they can be applied before model selection and do not require changing the original dataset.
+
+\textbf{Limitations.} Augmentation may improve acoustic robustness without solving every semantic or label-distribution mismatch. Adversarial training can be unstable and requires careful tuning. Generic image-domain techniques may need adaptation before they work well on contact audio features.
+
+\begin{landscape}
+\small
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{P{2.3cm}P{3.6cm}P{4.0cm}P{2.5cm}P{3.4cm}P{3.4cm}P{4.2cm}}
+\caption{Survey of Related Studies Grouped by Methodological Similarity}
+\label{tab:survey}\\
+\toprule
+\textbf{Group} & \textbf{Study} & \textbf{Core Idea} & \textbf{Input Modalities} & \textbf{Strengths} & \textbf{Limitations} & \textbf{Relevance to Our Project} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Group} & \textbf{Study} & \textbf{Core Idea} & \textbf{Input Modalities} & \textbf{Strengths} & \textbf{Limitations} & \textbf{Relevance to Our Project} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Contact/audio tactile sensing & Spears et al.~\cite{spears2025tree} & Fuse contact microphone audio and RGB images for tree-contact classification. & Audio, image & Directly matches labels and dataset; reports robot-domain generalization. & Narrow agricultural tree setting. & Main reference task and benchmark. \\
+Contact/audio tactile sensing & Lee et al.~\cite{lee2022contact} & Classify leaf, twig, and trunk contacts using audio features in cluttered canopies. & Audio & Shows MFCC is strong for contact audio. & Smaller and less multimodal than the later dataset. & Motivates MFCC/FFT baselines. \\
+Contact/audio tactile sensing & Mejia et al.~\cite{mejia2024hearing} & Use contact microphones as tactile sensors and leverage audio-visual pretraining. & Audio, vision, robot state & Strong argument for pretrained audio-visual features in robotics. & Manipulation tasks differ from tree-contact labels. & Supports using pretrained embeddings for low-data contact perception. \\
+Contact/audio tactile sensing & Gomez et al.~\cite{gomez2018material} & Identify materials recursively using tactile vibration and thermal features. & Tactile vibration, thermal & Emphasizes early and continuous material recognition. & Uses tactile hardware not present in our dataset. & Supports material-aware contact interpretation. \\
+Contact/audio tactile sensing & Mason et al.~\cite{mason2024wheel} & Use wheel-mounted acoustic waveguides for terrain, obstacle, and contact sensing. & Acoustic tactile signal & Demonstrates acoustic tactile sensing beyond manipulation. & Different robot embodiment and sensing mechanism. & Shows acoustic contact signals can generalize to robot perception tasks. \\
+Contact/audio tactile sensing & Fang et al.~\cite{fang2023rh20t} & Provide a large contact-rich robotic manipulation dataset with synchronized multimodal streams. & Vision, force, audio, action & Shows that audio belongs in real contact-rich robot datasets. & Much larger and broader than our classification task. & Supports future multimodal robot-contact generalization. \\
+Audio representation & Gong et al.~\cite{gong2021ast} & Apply a pure transformer to audio spectrogram patches. & Audio spectrogram & Strong pretrained audio classifier with global context. & Heavier than classical features. & Candidate audio encoder for contact classification. \\
+Audio representation & Elizalde et al.~\cite{elizalde2022clap} & Learn audio concepts using language-audio contrastive pretraining. & Audio, text & General-purpose audio embeddings and zero-shot ability. & Trained on generic audio-text pairs, not tactile data. & Candidate complementary audio embedding. \\
+Audio representation & Park et al.~\cite{park2019specaugment} & Mask time and frequency blocks in spectrogram features. & Audio features & Simple, effective augmentation for spectrogram models. & Does not model robot-specific noise by itself. & Useful for robust audio training. \\
+Audio representation & Gemmeke et al.~\cite{gemmeke2017audioset} & Build a large ontology and dataset for audio events. & Audio & Broad pretraining source. & Labels are generic sound events, not contact materials. & Explains why pretrained audio encoders can help. \\
+Audio representation & Fonseca et al.~\cite{fonseca2020fsd50k} & Provide an open sound-event dataset with waveform access. & Audio & Open benchmark for environmental sound recognition. & Not audio-visual and not tactile. & Useful background for audio representation learning. \\
+Audio representation & Piczak~\cite{piczak2015esc50} & Curate ESC-50 for environmental sound classification. & Audio & Small, clean benchmark for feature/model comparison. & Domain differs from robot contact audio. & Provides context for lightweight audio baselines. \\
+Audio-visual fusion & Chen et al.~\cite{chen2020vggsound} & Create a large audio-visual dataset with correspondence between visible source and sound. & Audio, video & Strong resource for audio-visual representation learning. & Natural videos differ from contact microphone data. & Motivates using visual context with audio. \\
+Audio-visual fusion & Tian et al.~\cite{tian2018ave} & Localize events that are both audible and visible. & Audio, video & Shows temporal alignment and attention improve fusion. & Assumes visible sound-producing events. & Supports attention/transformer fusion ideas. \\
+Audio-visual fusion & Geng et al.~\cite{geng2023unav} & Dense-localize audio-visual events in untrimmed videos. & Audio, video & Handles longer and more realistic video streams. & More complex than our fixed-window classification task. & Useful for future temporal extension. \\
+Robustness/domain adaptation & Sun and Saenko~\cite{sun2016deepcoral} & Align source and target feature covariance with CORAL loss. & Features & Lightweight domain adaptation objective. & Requires target-domain feature batches and careful validation. & Candidate for no-robot to robot feature alignment. \\
+Robustness/domain adaptation & Ganin et al.~\cite{ganin2016dann} & Learn task-discriminative but domain-invariant features using adversarial training. & Features & Powerful unsupervised domain adaptation framework. & Training can be unstable and harder to tune. & Later-stage option for robo/no-robo adaptation. \\
+Robustness/domain adaptation & Zhou et al.~\cite{zhou2021mixstyle} & Mix feature statistics to improve domain generalization. & Features & Simple plug-in idea for style/domain robustness. & Designed mainly for visual CNN features. & Inspires frequency/style mixing for contact audio. \\
+Audio robustness/augmentation & Eickhoff et al.~\cite{eickhoff2023bring} & Extract denoising behavior from pretrained ASR into a Cleancoder frontend. & Noisy speech, spectrograms & Shows preprocessing can improve pretrained downstream models under noise. & ASR-focused, not contact classification. & Motivates a denoising/noise-robust audio frontend. \\
+Audio robustness/augmentation & Oglic et al.~\cite{oglic2022waveform} & Treat data augmentation as vicinal risk minimization for robust waveform models. & Raw waveform & Strong theoretical and empirical support for augmentation under mismatch. & Speech recognition setting differs from contact audio. & Supports waveform-preserving augmentation for robot audio. \\
+Audio robustness/augmentation & Emmanouilidou et al.~\cite{emmanouilidou2024domain} & Study domain mismatch and seven augmentation methods for speech emotion recognition. & Speech audio & Shows augmentation can improve unseen-dataset performance. & Also shows acoustic augmentation cannot solve all domain mismatch. & Useful caution for robo/no-robo evaluation design. \\
+\end{longtable}
+\end{landscape}
+
+\section{Comparative Analysis}
+
+\begin{table}[H]
+\centering
+\caption{Comparison of Method Groups}
+\small
+\begin{tabularx}{\linewidth}{P{2.8cm}YYYYY}
+\toprule
+\textbf{Group} & \textbf{Best Use Case} & \textbf{Strength} & \textbf{Weakness} & \textbf{Difficulty} & \textbf{Suitability} \\
+\midrule
+Contact/audio tactile sensing & Understanding the physical contact task & Closest to robot contact and material cues & Often hardware- or task-specific & Medium & Very high \\
+Audio representation and pretrained models & Building audio-only and audio-embedding baselines & Strong signal from WAV data; good for low-data settings & May learn domain noise if not controlled & Low to medium & Very high \\
+Audio-visual fusion & Combining contact evidence with scene context & More complete than audio-only or vision-only & Fusion can overfit if dataset is small & Medium & High \\
+Audio robustness and augmentation & Handling noisy robot audio and no-robot to robot transfer & Directly improves the primary contact signal & Cannot solve all semantic or label mismatch alone & Low to medium & Very high \\
+Domain adaptation & Aligning no-robot and robot feature distributions & More principled than augmentation alone & Advanced methods need tuning & Medium to high & High \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Classical Audio Features vs. Pretrained Audio Encoders}
+
+Classical features such as MFCC, FFT magnitude, Mel spectrograms, and CQT are good first baselines because they are lightweight, interpretable, and feasible on CPU. They are especially useful for diagnosing which frequency regions distinguish leaf, twig, trunk, and ambient contacts. However, they may not capture long-range temporal structure as well as learned encoders.
+
+Pretrained audio encoders such as AST and CLAP can provide richer embeddings and may generalize better when the labeled dataset is small. Their limitation is cost and the risk of learning spurious background cues. Therefore, the project should keep both: classical features for transparent baselines and pretrained embeddings for stronger models.
+
+\subsection{Audio-Only vs. Vision-Only vs. Audio-Visual Fusion}
+
+Vision provides semantic context, such as whether the camera sees leaves, branches, or trunk-like structure. However, the actual contact point may be occluded. Audio captures contact-induced vibration after physical interaction begins and is therefore more directly tied to the contact class.
+
+The best implementation should be audio-first, not vision-first. Audio-only models should be strong baselines. Image features should then be added through late fusion or a lightweight transformer fusion module. This avoids relying on vision when the physical interaction is hidden.
+
+\subsection{Audio Augmentation vs. Domain Adaptation}
+
+Audio augmentation, including target-domain noise injection, waveform perturbation, denoising frontends, and SpecAugment, is easy to implement and directly useful for robustness. The newly added robustness studies support this direction: noise-aware preprocessing can improve downstream pretrained models, and augmentation can reduce performance drops under unseen acoustic conditions. It should be attempted before complex adaptation.
+
+Domain adaptation methods such as CORAL and DANN are more principled for source-target shift. CORAL is a reasonable next step because it aligns feature statistics with relatively little engineering. DANN is more ambitious and should be treated as an optional extension because adversarial objectives can be unstable in small datasets. The speech emotion robustness literature also warns that acoustic augmentation may not remove all domain mismatch, so cross-domain evaluation remains necessary.
+
+\subsection{Heavy Transformer Models vs. Lightweight ML Baselines}
+
+Transformer-based models can capture global context and support multimodal fusion, but they require more compute and careful regularization. Lightweight models such as logistic regression, SVM, random forest, and XGBoost on MFCC/FFT or pretrained embeddings are easier to train and compare. For this project, lightweight baselines should be used first, then transformer fusion should be evaluated only after the basic audio and domain robustness pipeline is reliable.
+
+\section{Selected Implementation Method}
+
+Based on the survey and the team's current direction, the selected method is:
+
+\begin{center}
+\textbf{Audio data processing and augmentation for robust contact classification.}
+\end{center}
+
+The proposed implementation pipeline is:
+
+\begin{enumerate}[leftmargin=1.5em]
+\item \textbf{Audio inspection and profiling.} Analyze waveform energy, spectrogram patterns, and class-wise frequency behavior for no-robot and robot domains. Build separate \textit{ambient} noise profiles for each domain.
+\item \textbf{Audio preprocessing.} Normalize waveform amplitude, crop or pad to the selected window length, optionally apply spectral gating or denoising, and preserve both waveform and spectrogram-style views for comparison.
+\item \textbf{Audio augmentation.} Add robot-domain ambient noise to no-robot training samples at controlled SNR levels; apply time shift, gain perturbation, light filtering, and SpecAugment on Mel/MFCC maps. Keep augmentation labels unchanged and evaluate whether the robot-domain F1 improves.
+\item \textbf{Audio feature/model branch.} Extract MFCC and FFT features for lightweight baselines. In parallel, extract AST and CLAP embeddings as stronger pretrained audio representations.
+\item \textbf{Optional visual/fusion branch.} Extract image embeddings from paired frames using a pretrained vision model such as ViT-B/16. Start with late fusion of audio and image logits or embedding concatenation after the audio pipeline is stable.
+\item \textbf{Evaluation.} Report macro F1, weighted F1, binary contact F1, confusion matrix, and cross-domain F1 from no-robot training to robot evaluation.
+\end{enumerate}
+
+This method is chosen for five reasons:
+
+\begin{itemize}[leftmargin=1.5em]
+\item it matches the available dataset and does not require new sensors or new data collection;
+\item it directly addresses the visible domain shift between no-robot and robot audio;
+\item it is supported by recent audio robustness work on noise-aware preprocessing, waveform augmentation, and cross-dataset mismatch;
+\item it keeps implementation feasible for a course project by starting with audio processing, classical features, and pretrained embeddings;
+\item it uses audio as the primary contact signal while leaving image fusion as a controlled improvement step;
+\item it avoids overcommitting to complex adversarial adaptation before simpler robust augmentation baselines are established.
+\end{itemize}
+
+\section{Conclusion}
+
+The literature shows that contact audio is a meaningful tactile signal for robot perception, especially when vision is occluded or incomplete. Classical audio features are useful for interpretable baselines, while pretrained models such as AST and CLAP can improve representation quality. Audio-visual fusion is valuable because audio captures contact-induced vibration and vision provides semantic context. However, the most important issue for the current project is the domain gap between hand-held/no-robot data and robot-mounted data.
+
+Therefore, the most suitable implementation direction is robust audio data processing and augmentation for contact classification. The project should first build reliable audio baselines, then improve them with domain-aware noise profiling and augmentation, and only then add image fusion or feature alignment for no-robot to robot transfer. This route satisfies the survey requirement and gives a realistic implementation path for the selected paper and dataset.
+
+\begin{thebibliography}{99}
+
+\bibitem{spears2025tree}
+R. Spears, M. Lee, G. Kantor, and O. Kroemer,
+``Audio-Visual Contact Classification for Tree Structures in Agriculture,''
+arXiv preprint arXiv:2505.12665, 2025.
+
+\bibitem{lee2022contact}
+M. Lee, K. Zhang, G. Kantor, and O. Kroemer,
+``Contact Classification for Agriculture Manipulation in Cluttered Canopies,''
+\textit{Proceedings of AI for Agriculture and Food Systems}, 2022.
+
+\bibitem{mejia2024hearing}
+J. Mejia, V. Dean, T. Hellebrekers, and A. Gupta,
+``Hearing Touch: Audio-Visual Pretraining for Contact-Rich Manipulation,''
+arXiv preprint arXiv:2405.08576, 2024.
+
+\bibitem{gomez2018material}
+A. Gomez Eguiluz, I. Rano, S. A. Coleman, and T. M. McGinnity,
+``Multimodal Material Identification through Recursive Tactile Sensing,''
+\textit{Robotics and Autonomous Systems}, vol. 106, pp. 130--139, 2018.
+
+\bibitem{mason2024wheel}
+W. Mason, D. Brenken, F. Z. Dai, R. G. C. Castillo, O. St-Martin Cormier, and A. Sedal,
+``Acoustic Tactile Sensing for Mobile Robot Wheels,''
+arXiv preprint arXiv:2402.18682, 2024.
+
+\bibitem{fang2023rh20t}
+H.-S. Fang, H. Fang, Z. Tang, J. Liu, C. Wang, J. Wang, H. Zhu, and C. Lu,
+``RH20T: A Comprehensive Robotic Dataset for Learning Diverse Skills in One-Shot,''
+arXiv preprint arXiv:2307.00595, 2023.
+
+\bibitem{gong2021ast}
+Y. Gong, Y.-A. Chung, and J. Glass,
+``AST: Audio Spectrogram Transformer,''
+arXiv preprint arXiv:2104.01778, 2021.
+
+\bibitem{elizalde2022clap}
+B. Elizalde, S. Deshmukh, M. Al Ismail, and H. Wang,
+``CLAP: Learning Audio Concepts from Natural Language Supervision,''
+arXiv preprint arXiv:2206.04769, 2022.
+
+\bibitem{park2019specaugment}
+D. S. Park, W. Chan, Y. Zhang, C.-C. Chiu, B. Zoph, E. D. Cubuk, and Q. V. Le,
+``SpecAugment: A Simple Data Augmentation Method for Automatic Speech Recognition,''
+arXiv preprint arXiv:1904.08779, 2019.
+
+\bibitem{gemmeke2017audioset}
+J. F. Gemmeke, D. P. W. Ellis, D. Freedman, A. Jansen, W. Lawrence, R. C. Moore, M. Plakal, and M. Ritter,
+``Audio Set: An Ontology and Human-Labeled Dataset for Audio Events,''
+\textit{Proceedings of IEEE ICASSP}, 2017.
+
+\bibitem{fonseca2020fsd50k}
+E. Fonseca, X. Favory, J. Pons, F. Font, and X. Serra,
+``FSD50K: An Open Dataset of Human-Labeled Sound Events,''
+arXiv preprint arXiv:2010.00475, 2020.
+
+\bibitem{piczak2015esc50}
+K. J. Piczak,
+``ESC: Dataset for Environmental Sound Classification,''
+\textit{Proceedings of ACM Multimedia}, 2015.
+
+\bibitem{chen2020vggsound}
+H. Chen, W. Xie, A. Vedaldi, and A. Zisserman,
+``VGGSound: A Large-Scale Audio-Visual Dataset,''
+arXiv preprint arXiv:2004.14368, 2020.
+
+\bibitem{tian2018ave}
+Y. Tian, J. Shi, B. Li, Z. Duan, and C. Xu,
+``Audio-Visual Event Localization in Unconstrained Videos,''
+arXiv preprint arXiv:1803.08842, 2018.
+
+\bibitem{geng2023unav}
+T. Geng, T. Wang, J. Duan, R. Cong, and F. Zheng,
+``Dense-Localizing Audio-Visual Events in Untrimmed Videos: A Large-Scale Benchmark and Baseline,''
+arXiv preprint arXiv:2303.12930, 2023.
+
+\bibitem{eickhoff2023bring}
+P. Eickhoff, M. Moller, T. P. Rosin, J. Twiefel, and S. Wermter,
+``Bring the Noise: Introducing Noise Robustness to Pretrained Automatic Speech Recognition,''
+\textit{Proceedings of ICANN}, Lecture Notes in Computer Science, vol. 14260, 2023.
+
+\bibitem{oglic2022waveform}
+D. Oglic, Z. Cvetkovic, P. Sollich, S. Renals, and B. Yu,
+``Towards Robust Waveform-Based Acoustic Models,''
+\textit{IEEE/ACM Transactions on Audio, Speech, and Language Processing}, 2022.
+
+\bibitem{emmanouilidou2024domain}
+D. Emmanouilidou, H. Gamper, and M. Yousefi,
+``Domain Mismatch and Data Augmentation in Speech Emotion Recognition,''
+\textit{SMM24, Interspeech Workshop on Speech, Music and Mind}, 2024.
+
+\bibitem{sun2016deepcoral}
+B. Sun and K. Saenko,
+``Deep CORAL: Correlation Alignment for Deep Domain Adaptation,''
+arXiv preprint arXiv:1607.01719, 2016.
+
+\bibitem{ganin2016dann}
+Y. Ganin, E. Ustinova, H. Ajakan, P. Germain, H. Larochelle, F. Laviolette, M. Marchand, and V. Lempitsky,
+``Domain-Adversarial Training of Neural Networks,''
+\textit{Journal of Machine Learning Research}, vol. 17, no. 59, pp. 1--35, 2016.
+
+\bibitem{zhou2021mixstyle}
+K. Zhou, Y. Yang, Y. Qiao, and T. Xiang,
+``Domain Generalization with MixStyle,''
+arXiv preprint arXiv:2104.02008, 2021.
+
+\end{thebibliography}
+
+\end{document}

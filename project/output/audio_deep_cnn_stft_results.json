@@ -1,0 +1,108 @@
+{
+  "mode": "audio_deep_cnn_stft",
+  "feature": "stft",
+  "model_kind": "cnn",
+  "best_paper_f1": 0.6524917298678097,
+  "best_epoch": 21,
+  "early_stopping_patience": 10,
+  "min_delta": 0.0001,
+  "best_val_metrics": {
+    "paper_average": "weighted",
+    "paper_f1": 0.6524917298678097,
+    "paper_precision": 0.6310354701769897,
+    "paper_recall": 0.6943192064923355,
+    "macro_f1": 0.48250532992809525,
+    "macro_precision": 0.4900372399766877,
+    "macro_recall": 0.5055591560999748,
+    "weighted_f1": 0.6524917298678097,
+    "weighted_precision": 0.6310354701769897,
+    "weighted_recall": 0.6943192064923355,
+    "accuracy": 0.6943192064923355,
+    "per_class": {
+      "ambient": {
+        "precision": 0.8747099767981439,
+        "recall": 1.0,
+        "f1": 0.9331683168316832,
+        "support": 1131
+      },
+      "leaf": {
+        "precision": 0.15,
+        "recall": 0.020477815699658702,
+        "f1": 0.036036036036036036,
+        "support": 293
+      },
+      "trunk": {
+        "precision": 0.4288164665523156,
+        "recall": 0.5422993492407809,
+        "f1": 0.4789272030651341,
+        "support": 461
+      },
+      "twig": {
+        "precision": 0.5066225165562914,
+        "recall": 0.4594594594594595,
+        "f1": 0.4818897637795276,
+        "support": 333
+      }
+    },
+    "confusion_matrix": [
+      [
+        1131,
+        0,
+        0,
+        0
+      ],
+      [
+        28,
+        6,
+        210,
+        49
+      ],
+      [
+        109,
+        2,
+        250,
+        100
+      ],
+      [
+        25,
+        32,
+        123,
+        153
+      ]
+    ],
+    "binary_contact_f1": 0.9194831013916501,
+    "binary_contact": {
+      "paper_average": "binary",
+      "paper_f1": 0.9194831013916501,
+      "paper_precision": 1.0,
+      "paper_recall": 0.8509659613615456,
+      "binary_contact_f1": 0.9194831013916501,
+      "accuracy": 0.9269612263300271,
+      "per_class": {
+        "non_contact": {
+          "precision": 0.8747099767981439,
+          "recall": 1.0,
+          "f1": 0.9331683168316832,
+          "support": 1131
+        },
+        "contact": {
+          "precision": 1.0,
+          "recall": 0.8509659613615456,
+          "f1": 0.9194831013916501,
+          "support": 1087
+        }
+      },
+      "confusion_matrix": [
+        [
+          1131,
+          0
+        ],
+        [
+          162,
+          925
+        ]
+      ]
+    }
+  },
+  "weight_file": "/kaggle/working/outputs/variants/best_audio_deep_cnn_stft_model.pt"
+}
